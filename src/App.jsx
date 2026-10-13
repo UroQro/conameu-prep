@@ -38,8 +38,8 @@ export default function App() {
       <main className="max-w-5xl mx-auto p-6 mt-4">
         {currentView === 'dashboard' && <Dashboard setView={setCurrentView} />}
         {currentView === 'sim' && <Simulator setView={setCurrentView} user={user} />}
-        {currentView === 'errors' && <ErrorReview setView={setCurrentView} />}
-        {currentView === 'history' && <History setView={setCurrentView} />}
+        {currentView === 'errors' && <ErrorReview setView={setCurrentView} user={user} />}
+        {currentView === 'history' && <History setView={setCurrentView} user={user} />}
       </main>
     </div>
   );

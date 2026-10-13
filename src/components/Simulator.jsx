@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 import { Check, X, ArrowRight, RotateCcw } from 'lucide-react';
 
-export default function Simulator({ setView }) {
+export default function Simulator({ setView, user }) {
   const [preguntas, setPreguntas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selectedAns, setSelectedAns] = useState(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [score, setScore] = useState(0);
+  const [errores, setErrores] = useState([]);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     const fetchPreguntas = async () => {
@@ -30,24 +32,52 @@ export default function Simulator({ setView }) {
     if (isAnswered) return;
     setSelectedAns(key);
     setIsAnswered(true);
-    if (key === preguntas[currentIdx].respuesta_correcta) setScore(s => s + 1);
+    
+    const p = preguntas[currentIdx];
+    if (key === p.respuesta_correcta) {
+      setScore(s => s + 1);
+    } else {
+      // Guardamos la pregunta entera como error
+      setErrores(prev => [...prev, p]);
+    }
   };
 
-  const nextQuestion = () => {
-    setCurrentIdx(i => i + 1);
-    setSelectedAns(null);
-    setIsAnswered(false);
+  const nextQuestion = async () => {
+    if (currentIdx + 1 >= preguntas.length) {
+      // Hemos terminado, vamos a guardar en Firebase
+      setCurrentIdx(i => i + 1);
+      const calif = Math.round((score / preguntas.length) * 100);
+      try {
+        await addDoc(collection(db, "users", user.uid, "exams"), {
+          score: calif,
+          totalCorrect: score,
+          totalQuestions: preguntas.length,
+          errores: errores,
+          date: serverTimestamp()
+        });
+        setSaved(true);
+      } catch (error) {
+        console.error("Error guardando examen:", error);
+      }
+    } else {
+      setCurrentIdx(i => i + 1);
+      setSelectedAns(null);
+      setIsAnswered(false);
+    }
   };
 
   if (loading) return <div className="flex justify-center p-20"><div className="animate-spin h-10 w-10 border-b-2 border-uroblue-600 rounded-full"></div></div>;
-  if (preguntas.length === 0) return <div className="text-center p-20 font-bold text-slate-500">Aún no hay preguntas en la base de datos de Firebase. Sube el archivo JSON.</div>;
+  if (preguntas.length === 0) return <div className="text-center p-20 font-bold text-slate-500">Aún no hay preguntas.</div>;
 
   if (currentIdx >= preguntas.length) {
     const calif = Math.round((score / preguntas.length) * 100);
     return (
       <div className="max-w-2xl mx-auto bg-white p-10 rounded-3xl shadow-sm border border-slate-100 text-center mt-10 fade-in">
         <h2 className="text-3xl font-extrabold text-slate-800 mb-2">Simulación Completada</h2>
-        <div className="relative w-48 h-48 mx-auto mb-8 mt-8">
+        {!saved && <p className="text-amber-500 font-bold mb-4">Guardando resultados en tu perfil...</p>}
+        {saved && <p className="text-emerald-500 font-bold mb-4">¡Resultados guardados correctamente!</p>}
+        
+        <div className="relative w-48 h-48 mx-auto mb-8 mt-4">
           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
             <path className="text-slate-100" strokeWidth="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
             <path className={`${calif >= 70 ? 'text-emerald-500' : 'text-amber-500'}`} strokeDasharray={`${calif}, 100`} strokeWidth="3" strokeLinecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -56,7 +86,8 @@ export default function Simulator({ setView }) {
         </div>
         <p className="text-lg font-bold text-slate-700 mb-8">Acertaste {score} de {preguntas.length}</p>
         <div className="flex justify-center gap-4">
-          <button onClick={() => setView('dashboard')} className="flex items-center gap-2 px-6 py-3 bg-uroblue-600 text-white font-bold rounded-xl shadow-md">Ir al Menú <ArrowRight className="w-5 h-5" /></button>
+          <button onClick={() => window.location.reload()} className="flex items-center gap-2 px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl"><RotateCcw className="w-5 h-5" /> Repetir</button>
+          <button onClick={() => setView('dashboard')} className="flex items-center gap-2 px-6 py-3 bg-uroblue-600 text-white font-bold rounded-xl shadow-md hover:bg-uroblue-700">Ir al Menú <ArrowRight className="w-5 h-5" /></button>
         </div>
       </div>
     );
@@ -113,7 +144,7 @@ export default function Simulator({ setView }) {
       {isAnswered && (
         <div className="flex justify-end fade-in">
           <button onClick={nextQuestion} className="flex items-center gap-2 bg-slate-800 text-white font-bold py-3.5 px-8 rounded-xl hover:bg-slate-900 shadow-md">
-            {currentIdx + 1 === preguntas.length ? 'Finalizar' : 'Siguiente'} <ArrowRight className="w-5 h-5" />
+            {currentIdx + 1 === preguntas.length ? 'Finalizar y Guardar' : 'Siguiente'} <ArrowRight className="w-5 h-5" />
           </button>
         </div>
       )}
