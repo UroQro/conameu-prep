@@ -1,0 +1,559 @@
+Durante el desarrollo embrionario, ¿cuál es la estructura precursora del epidídimo, los conductos deferentes y las vesículas seminales?
+a. Conducto de Müller (paramesonéfrico)
+b. Conducto de Wolff (mesonéfrico)
+c. Seno urogenital
+d. Tubérculo genital
+Respuesta: b
+Justificación: En el feto masculino, la testosterona promueve la diferenciación de los conductos mesonéfricos (Wolff) en las estructuras del tracto reproductivo interno.
+
+¿A partir de qué semana de gestación comienza la producción de orina por el metanefros?
+a. 6ª semana
+b. 8ª semana
+c. 10ª semana
+d. 12ª semana
+Respuesta: c
+Justificación: El metanefros (riñón definitivo) se vuelve funcional y comienza a producir orina aproximadamente en la 10ª semana de gestación.
+
+¿Cuál es el origen nervioso del reflejo cremastérico?
+a. Nervio ilioinguinal (L1)
+b. Nervio genitofemoral (L1-L2)
+c. Nervio pudendo (S2-S4)
+d. Nervio obturador
+Respuesta: b
+Justificación: El nervio genitofemoral, específicamente su rama genital, es responsable de la vía eferente del reflejo cremastérico.
+
+Un paciente presenta un incidentaloma suprarrenal. ¿Cuál de las siguientes unidades Hounsfield (UH) en una TC sin contraste sugiere fuertemente una lesión benigna (adenoma)?
+a. < 10 UH
+b. > 20 UH
+c. Entre 30 y 40 UH
+d. Presencia de calcificaciones centrales
+Respuesta: a
+Justificación: Los adenomas ricos en lípidos suelen presentar una atenuación baja (< 10 UH) en la tomografía computarizada sin contraste.
+
+¿Cuál es el subtipo histológico más común del carcinoma de células renales (CCR)?
+a. Cromófobo
+b. Papilar Tipo I
+c. Células claras
+d. Conductos colectores
+Respuesta: c
+Justificación: El carcinoma de células claras representa aproximadamente el 75-80% de los casos de cáncer renal cortical.
+
+De acuerdo con las guías de la AUA, ¿cuál es el rango de referencia de PSA "normal" para un hombre de 40-49 años?
+a. 0 - 2.5 ng/dL
+b. 0 - 3.5 ng/dL
+c. 0 - 4.5 ng/dL
+d. 0 - 6.5 ng/dL
+Respuesta: a
+Justificación: El PSA tiene rangos ajustados por edad; para la cuarta década de vida, el límite superior suele ser 2.5 ng/dL para evitar omitir diagnósticos tempranos.
+
+¿En qué zona de la próstata se origina la mayoría de los adenocarcinomas prostáticos?
+a. Zona de transición
+b. Zona central
+c. Zona periférica
+d. Estroma fibromuscular anterior
+Respuesta: c
+Justificación: Aproximadamente el 70-80% de los cánceres de próstata se originan en la zona periférica.
+
+En el manejo del cáncer de vejiga no músculo-invasor (NMIBC) de alto riesgo, ¿cuál es el tratamiento intravesical de elección tras la RTU-V?
+a. Mitomicina C dosis única
+b. BCG (Bacilo de Calmette-Guérin)
+c. Gemcitabina
+d. Interferón alfa
+Respuesta: b
+Justificación: La inmunoterapia con BCG es el estándar de oro para reducir la recurrencia y la progresión en pacientes con NMIBC de alto riesgo.
+
+¿Cuál es la anomalía urológica asociada más frecuente en niños con criptorquidia?
+a. Persistencia del conducto peritoneovaginal (Hernia/Hidrocele)
+b. Reflujo vesicoureteral
+c. Hipospadias
+d. Válvulas de uretra posterior
+Respuesta: a
+Justificación: La mayoría de los testículos no descendidos tienen un proceso vaginal patente (persistencia del conducto peritoneovaginal) asociado.
+
+Según la clasificación de la SFU (Society for Fetal Urology), ¿qué grado de hidronefrosis presenta dilatación de la pelvis renal y cálices, pero con parénquima renal conservado?
+a. Grado 1
+b. Grado 2
+c. Grado 3
+d. Grado 4
+Respuesta: c
+Justificación: El grado 3 de la SFU se caracteriza por dilatación de la pelvis y todos los cálices, mientras que el grado 4 añade el adelgazamiento del parénquima renal.
+
+Según las recomendaciones de la AUA, ¿cuál es el rango de referencia de PSA para un hombre de raza negra de entre 50-59 años?
+a. 0-2.5 ng/ml
+b. 0-3.5 ng/ml
+c. 0-4.0 ng/ml
+d. 0-4.5 ng/ml
+Respuesta: d
+Justificacion: Los rangos de referencia de PSA varían según la edad y la raza. Para hombres de raza negra en la sexta década, el límite superior es ligeramente más alto (4.5 ng/ml) que en hombres blancos (3.5 ng/ml) para el mismo rango de edad.
+
+De acuerdo con las categorías de riesgo de D'Amico, ¿cuál de los siguientes criterios define a un paciente de "Alto Riesgo"?
+a. PSA < 10, Gleason 6, cT1c
+b. PSA 10-20, Gleason 7, cT2b
+c. PSA > 20 o Gleason 8-10 o cT2c/T3
+d. PSA > 15, Gleason 7, cT2a
+Respuesta: c
+Justificacion: La clasificación de D'Amico es fundamental para decidir el tratamiento. El alto riesgo se establece con cualquiera de esos tres parámetros (PSA > 20, Gleason igual o mayor a 8, o estadio clínico igual o mayor a T2c).
+
+¿Qué porcentaje de los cánceres de próstata se originan en la Zona de Transición?
+a. 70%
+b. 20%
+c. 10%
+d. 5%
+Respuesta: b
+Justificacion: Mientras que la zona periférica alberga el 70% de los tumores, la zona de transición es el origen de aproximadamente el 20% de los casos de adenocarcinoma.
+
+En un paciente con Cáncer de Próstata Resistente a la Castración (CRPC) metastásico, ¿cuál de los siguientes fármacos actúa mediante la inhibición de la enzima CYP17?
+a. Enzalutamida
+b. Abiraterona
+c. Cabazitaxel
+d. Apalutamida
+Respuesta: b
+Justificacion: El acetato de abiraterona bloquea la síntesis de andrógenos a nivel adrenal y tumoral inhibiendo selectivamente la enzima CYP17.
+
+¿Cuál es el sitio más común de metástasis a distancia en el cáncer de próstata?
+a. Hígado
+b. Pulmón
+c. Hueso (Esqueleto axial)
+d. Cerebro
+Respuesta: c
+Justificacion: El cáncer de próstata tiene un tropismo marcado por el hueso, particularmente las vértebras, la pelvis y las costillas.
+
+¿Cuál es el tumor de células germinales más común en el adulto joven?
+a. Teratoma
+b. Carcinoma embrionario
+c. Seminoma
+d. Tumor del saco vitelino
+Respuesta: c
+Justificacion: El seminoma representa aproximadamente el 50% de todos los tumores de células germinales en adultos.
+
+¿Qué marcador tumoral se eleva de manera característica en el Tumor del Saco Vitelino (Yolk Sac Tumor) y NUNCA se eleva en un Seminoma puro?
+a. hCG (Gonadotropina coriónica humana)
+b. LDH (Lactato deshidrogenasa)
+c. AFP (Alfa-fetoproteína)
+d. CA-125
+Respuesta: c
+Justificacion: La elevación de AFP descarta el diagnóstico de seminoma puro. Un seminoma con AFP elevada se trata automáticamente como un tumor no seminomatoso.
+
+Un paciente con tumor testicular no seminomatoso presenta metástasis pulmonares pero marcadores normales tras la orquiectomía. ¿En qué categoría de riesgo de la IGCCCG se clasifica?
+a. Buen riesgo
+b. Riesgo intermedio
+c. Pobre riesgo
+d. Riesgo muy bajo
+Respuesta: a
+Justificacion: En los tumores no seminomatosos, la presencia de metástasis pulmonares (no viscerales extrapulmonares) con marcadores post-orquiectomía normales o levemente elevados sitúa al paciente en la categoría de Buen Riesgo.
+
+¿Cuál es el tratamiento de elección inicial ante la sospecha clínica y por imagen de una masa testicular sólida?
+a. Biopsia transescrotal
+b. Orquiectomía radical inguinal
+c. Vigilancia estrecha
+d. Quimioterapia neoadyuvante
+Respuesta: b
+Justificacion: El abordaje debe ser inguinal para evitar la alteración del drenaje linfático testicular (que es retroperitoneal) y prevenir la siembra escrotal.
+
+¿En qué tipo de tumor testicular es más frecuente encontrar el cuerpo de Schiller-Duval en la histología?
+a. Coriocarcinoma
+b. Tumor del saco vitelino
+c. Teratoma maduro
+d. Seminoma espermatocítico
+Respuesta: b
+Justificacion: Los cuerpos de Schiller-Duval (estructuras que asemejan glomérulos primitivos) son el hallazgo patognomónico del tumor del saco vitelino.
+
+¿Cuál es el criterio diagnóstico estándar para una bacteriuria significativa en una mujer joven con síntomas de cistitis aguda no complicada?
+a. >= 10^5 Unidades Formadoras de Colonias (UFC)/ml
+b. >= 10^2 UFC/ml
+c. >= 10^3 UFC/ml
+d. Presencia de cualquier recuento bacteriano en sedimento
+Respuesta: b
+Justificacion: Aunque tradicionalmente se usaba el umbral de 10^5 (criterios de Kass), en mujeres con síntomas claros de cistitis, un recuento de >= 10^2 UFC/ml de un patógeno uropatógeno es altamente predictivo de infección.
+
+¿En qué escenario clínico está indicado el tratamiento de la bacteriuria asintomática?
+a. Pacientes ancianos institucionalizados
+b. Pacientes diabéticos con buen control glucémico
+c. Mujeres embarazadas y previo a procedimientos urológicos invasivos
+d. Pacientes con catéter urinario crónico
+Respuesta: c
+Justificacion: El tratamiento de la bacteriuria asintomática solo ha demostrado beneficio claro en prevenir complicaciones durante el embarazo (pielonefritis) y reducir el riesgo de sepsis antes de cirugías urológicas.
+
+¿Cuál es el síntoma más común y característico de la Tuberculosis Genitourinaria?
+a. Cólico renal severo
+b. Piuria estéril (leucocituria con cultivos bacterianos negativos)
+c. Hematuria macroscópica inicial
+d. Neumaturia
+Respuesta: b
+Justificacion: La piuria estéril en presencia de síntomas irritativos persistentes es el hallazgo clásico que debe obligar a descartar tuberculosis renal o vesical.
+
+Un paciente presenta una úlcera genital única, indolora, de bordes limpios y base firme (indurada). ¿Cuál es el diagnóstico más probable?
+a. Herpes simple (VHS-2)
+b. Chancroide (Haemophilus ducreyi)
+c. Sífilis primaria (Chancro sifilítico)
+d. Linfogranuloma venéreo
+Respuesta: c
+Justificacion: El chancro de la sífilis primaria se distingue por ser indoloro y presentar una base indurada, a diferencia de las úlceras dolorosas del herpes o el chancroide.
+
+¿Cuál es el tratamiento de primera línea recomendado por los CDC para la uretritis no gonocócica (comúnmente causada por Chlamydia trachomatis)?
+a. Penicilina G benzatínica
+b. Azitromicina 1g dosis única o Doxiciclina 100mg cada 12h por 7 días
+c. Ciprofloxacino 500mg dosis única
+d. Metronidazol 2g dosis única
+Respuesta: b
+Justificacion: La azitromicina y la doxiciclina son los fármacos de elección por su alta eficacia contra Chlamydia y Mycoplasma genitalium.
+
+El "signo de la ranura" (apariencia de los ganglios inguinales divididos por el ligamento inguinal) es patognomónico de:
+a. Granuloma inguinal
+b. Linfogranuloma venéreo (LGV)
+c. Sífilis secundaria
+d. Cáncer de pene metastásico
+Respuesta: b
+Justificacion: El LGV, causado por serotipos L1-L3 de C. trachomatis, provoca adenopatías inguinales dolorosas que pueden presentar este signo característico.
+
+¿Cuál es la causa más común de estenosis uretral en el mundo occidental actualmente?
+a. Infecciones gonocócicas
+b. Idiopática o iatrogénica (cateterismo, instrumentación)
+c. Traumatismo por caída a horcajadas
+d. Liquen escleroso (Balanitis xerótica obliterante)
+Respuesta: b
+Justificacion: Las causas iatrogénicas (como cirugías transuretrales o cateterismo prolongado) y las idiopáticas han superado a las infecciosas en la incidencia de estenosis uretrales.
+
+En un paciente con una estenosis de uretra bulbar de 1 cm, no recidivante, ¿cuál es el tratamiento inicial con mejor tasa de éxito?
+a. Dilatación uretral repetida
+b. Uretrotomía Interna Bajo Visión Directa (UIVD/Sachse)
+c. Uretroplastia término-terminal
+d. Colocación de stent uretral
+Respuesta: b
+Justificacion: Para estenosis cortas menores a 1.5 cm en la uretra bulbar que no han sido tratadas previamente, la UIVD es una opción inicial razonable, aunque la uretroplastia ofrece mejores resultados a largo plazo.
+
+¿Cuál es la principal característica histopatológica del Liquen Escleroso (Balanitis Xerótica Obliterante) que afecta la uretra?
+a. Hiperplasia epitelial maligna
+b. Atrofia epidérmica con hialinización del colágeno subepitelial
+c. Infiltrado masivo de neutrófilos
+d. Metaplasia escamosa queratinizante
+Respuesta: b
+Justificacion: El liquen escleroso es una enfermedad inflamatoria crónica que genera una cicatriz blanquecina y densa debido a la hialinización del colágeno, afectando frecuentemente el meato y la uretra distal. Sus hallazgos histológicos son atrofia del epitelio escamoso, hialinización del colágeno en la dermis, banda de infiltrado linfocitario crónico subepitelial y pérdida de elasticidad tisular.
+
+Un paciente joven sufre un traumatismo perineal (caída a horcajadas) y presenta uretrorragia. La uretrografía muestra extravasación de contraste en la uretra bulbar con paso a la vejiga. Se clasifica como:
+a. Contusión uretral
+b. Rotura parcial de uretra
+c. Rotura completa de uretra
+d. Elongación uretral
+Respuesta: b
+Justificacion: La presencia de extravasación de contraste mientras todavía se visualiza el paso del mismo hacia la vejiga define la rotura parcial.
+
+¿Cuál es la causa más común de hidronefrosis prenatal detectada por ultrasonido?
+a. Válvulas de uretra posterior
+b. Reflujo Vesicoureteral (RVU)
+c. Obstrucción de la Unión Ureteropiélica (OUUP)
+d. Megauréter primario
+Respuesta: c
+Justificacion: La OUUP es la anomalía obstructiva más frecuente en el periodo neonatal y la causa principal de hidronefrosis detectada prenatalmente.   
+
+Un recién nacido varón presenta un chorro urinario débil, vejiga palpable y ascitis urinaria. ¿Cuál es el diagnóstico más probable?
+a. Estrechez uretral congénita
+b. Válvulas de Uretra Posterior (VUP)
+c. Ureterocele ectópico
+d. Divertículo de vejiga
+Respuesta: b
+Justificacion: Las VUP son la causa más común de obstrucción infravesical en niños varones y pueden presentarse con distensión vesical y compromiso renal severo.   
+
+En la clasificación de la SFU (Society for Fetal Urology) para hidronefrosis posnatal, ¿qué hallazgo define al Grado 4?
+a. Dilatación de la pelvis renal solamente
+b. Dilatación de la pelvis y cálices mayores
+c. Dilatación calicial con parénquima renal normal
+d. Dilatación calicial asociada a adelgazamiento del parénquima renal
+Respuesta: d
+Justificacion: El adelgazamiento o atrofia del parénquima renal es el criterio distintivo que diferencia el grado 4 del grado 3.   
+
+¿Cuál es el estudio de elección (Estándar de Oro) para el diagnóstico y gradación del Reflujo Vesicoureteral?
+a. Ultrasonido renal y vesical
+b. Cistogammagrafía nuclear
+c. Cistouretrografía Miccional Cistoscópica (CUM o VCUG)
+d. Urografía excretora
+Respuesta: c
+Justificacion: La VCUG permite visualizar la anatomía uretral y clasificar el reflujo del grado I al V según la clasificación internacional.   
+
+De acuerdo con las tasas de resolución espontánea del RVU, ¿qué grado tiene la menor probabilidad de resolverse sin cirugía?
+a. Grado I
+b. Grado II
+c. Grado III
+d. Grado V
+Respuesta: d
+Justificacion: El reflujo de alto grado (IV y V) tiene tasas de resolución espontánea muy bajas, a menudo requiriendo intervención quirúrgica si presentan IVU febril recurrente o deterioro de la función renal.   
+
+¿A qué edad se recomienda realizar la orquidopexia en un niño con testículo no descendido congénito para optimizar el potencial de fertilidad y reducir riesgos?
+a. Al nacer
+b. Entre los 6 y 12 meses de edad
+c. A los 2 años
+d. Antes de la pubertad
+Respuesta: b
+Justificacion: La mayoría de las guías actuales recomiendan la cirugía antes de los 12 meses, ya que el descenso espontáneo es raro después de los 6 meses de vida.   
+
+¿Cuál es la localización más frecuente de la apertura del meato en los pacientes con hipospadias?
+a. Glandular / Coronal
+b. Peneana media
+c. Penoescrotal
+d. Perineal
+Respuesta: a
+Justificacion: Las hipospadias distales (glanulares o subcoronales) representan aproximadamente el 70% de todos los casos.   
+
+¿Cuál es el tumor sólido abdominal más frecuente en la infancia?
+a. Neuroblastoma
+b. Tumor de Wilms (Nefroblastoma)
+c. Teratoma retroperitoneal
+d. Rabdomiosarcoma
+Respuesta: b
+Justificacion: El tumor de Wilms es la neoplasia renal primaria más común y el tumor abdominal sólido más frecuente en niños.   
+
+En el estadiaje del Tumor de Wilms (NWTS/COG), ¿qué estadio corresponde a un tumor que se rompió antes o durante la cirugía?
+a. Estadio I
+b. Estadio II
+c. Estadio III
+d. Estadio IV
+Respuesta: c
+Justificacion: La ruptura tumoral, ya sea espontánea o quirúrgica, implica contaminación peritoneal y clasifica automáticamente al paciente en Estadio III.  
+
+ ¿Cuál es el marcador biológico más importante para el pronóstico y seguimiento del Neuroblastoma?
+a. Alfa-fetoproteína (AFP)
+b. Ácido homovanílico (HVA) y Ácido vanilmandélico (VMA) en orina
+c. Antígeno Carcinoembrionario (ACE)
+d. CA-19-9
+Respuesta: b
+Justificacion: Los metabolitos de las catecolaminas (VMA/HVA) se elevan en más del 90% de los pacientes con neuroblastoma debido a su origen en la cresta neural y la producción de catecolaminas.  
+
+En un paciente con traumatismo abdominal cerrado, ¿cuál es la indicación absoluta de exploración quirúrgica renal inmediata?
+a. Hematuria macroscópica persistente.
+b. Inestabilidad hemodinámica atribuible a hemorragia renal.
+c. Laceración del parénquima > 1 cm.
+d. Extravasación de contraste en la fase tardía de la TC.
+Respuesta: b
+Justificacion: La inestabilidad hemodinámica es la indicación absoluta. La mayoría de los traumas renales, incluso de alto grado (III-IV), pueden manejarse de forma conservadora si el paciente está estable.
+
+Según la escala de la AAST, ¿qué grado corresponde a una avulsión del pedículo renal que causa un riñón desvascularizado?
+a. Grado III.
+b. Grado IV.
+c. Grado V.
+d. Grado VI.
+Respuesta: c
+Justificacion: El Grado V incluye el riñón estallado (shattered kidney) o la avulsión/trombosis del pedículo vascular renal que compromete totalmente la irrigación del órgano.
+
+¿Cuál es el estudio de imagen de elección ("Gold Standard") para evaluar un traumatismo renal en un paciente estable?
+a. Ultrasonido FAST.
+b. Tomografía Computarizada (TC) con contraste intravenoso y fase tardía.
+c. Urografía excretora.
+d. Resonancia Magnética.
+Respuesta: b
+Justificacion: La TC permite graduar la lesión, evaluar la función renal y detectar extravasación urinaria en la fase excretora o tardía.
+
+¿Cuál es la causa más común de lesión ureteral en la práctica urológica moderna?
+a. Heridas por arma de fuego.
+b. Traumatismo abdominal cerrado.
+c. Lesión iatrogénica durante cirugía pélvica o endourológica.
+d. Fracturas pélvicas.
+Respuesta: c
+Justificacion: La mayoría de las lesiones ureterales ocurren durante procedimientos quirúrgicos (ginecológicos, colorrectales o urológicos) y no por trauma externo.
+
+En una rotura de vejiga EXTRAPERITONEAL simple, ¿cuál es el manejo inicial de elección?
+a. Reparación quirúrgica inmediata.
+b. Drenaje con sonda transuretral de amplio calibre por 10-14 días.
+c. Cistostomía suprapúbica exclusivamente.
+d. Observación sin drenaje.
+Respuesta: b
+Justificacion: Las roturas extraperitoneales suelen curar con drenaje por sonda. Las roturas intraperitoneales, por el contrario, siempre requieren reparación quirúrgica. Se requiere reparación quirúrgica si hay lesión compleja, lesión del cuello vesical, lesión rectal o vaginal asociada, o fallo del manejo conservador.
+
+¿Cuál es la causa más frecuente de estenosis de la arteria renal en pacientes jóvenes, especialmente mujeres?
+a. Aterosclerosis.
+b. Displasia fibromuscular.
+c. Vasculitis.
+d. Compresión extrínseca por tumores.
+Respuesta: b
+Justificacion: Mientras que la aterosclerosis predomina en adultos mayores, la displasia fibromuscular es la causa principal en jóvenes y suele presentar la imagen clásica en "rosario" en la angiografía. Afecta principalmente mujeres menores de 50 años y compromete el segmento medio-distal de la arteria renal.
+
+¿Qué hallazgo en el gammagrama renal con Captopril sugiere hipertensión renovascular?
+a. Aumento de la captación del radiotrazador.
+b. Disminución significativa de la función renal relativa o retraso en el tiempo al pico tras la dosis de captopril.
+c. Mejora de la excreción urinaria.
+d. No hay cambios respecto al estudio basal.
+Respuesta: b
+Justificacion: El captopril inhibe la angiotensina II, que mantiene la presión de filtración en un riñón estenótico; al quitar este mecanismo, la filtración cae bruscamente en el riñón estenótico y disminuye la presión intraglomerular, lo que es diagnóstico.
+
+¿Cuál es el tratamiento de elección para la estenosis de la arteria renal por displasia fibromuscular?
+a. Bypass aorto-renal quirúrgico.
+b. Angioplastia transluminal percutánea (ATP).
+c. Tratamiento médico con 3 o más fármacos.
+d. Nefrectomía.
+Respuesta: b
+Justificacion: La ATP tiene tasas de éxito muy altas en la displasia fibromuscular, a menudo logrando la cura definitiva de la hipertensión. La lesión no es una placa aterosclerótica, sino una alteración de la pared arterial, por eso el tratamiento de elección es angioplastia percutánea con balón generalmente sin necesidad de stent.
+
+Un paciente con priapismo isquémico (bajo flujo) de 12 horas de evolución debe ser tratado inicialmente con:
+a. Compresas frías y observación.
+b. Aspiración de los cuerpos cavernosos e irrigación con agentes simpaticomiméticos (Fenilefrina).
+c. Colocación inmediata de prótesis de pene.
+d. Shunt de Al-Ghorab (quirúrgico).
+Respuesta: b
+Justificacion: El tratamiento inicial es médico-conservador mediante aspiración e irrigación; los shunts quirúrgicos se reservan para casos que no responden a la irrigación. Es una urgencia ya que a las 12 horas existe hipoxia y acidosis cavernosa. El manejo inicial estándar incluye inyección intracavernosa de fenilefrina.
+
+¿Cuál es el tiempo "dorado" para realizar la detorsión testicular y asegurar la viabilidad del órgano en una torsión de cordón espermático?
+a. < 6 horas.
+b. < 12 horas.
+c. < 24 horas.
+d. No hay límite de tiempo.
+Respuesta: a
+Justificacion: La tasa de salvamento testicular es cercana al 100% si se interviene antes de las 6 horas, descendiendo drásticamente después de ese tiempo. Las tasas de viabilidad son del 90-100% antes de 6 horas, y siempre se debe realizar orquidopexia bilateral.
+
+¿Cuál es la tríada clásica del cáncer renal, aunque solo se presenta en aproximadamente el 10% de los pacientes en la actualidad?
+a. Hematuria, dolor en el flanco y masa palpable.
+b. Fiebre, pérdida de peso y anemia.
+c. Hipertensión, hematuria y proteinuria.
+d. Masa abdominal, varicocele izquierdo y dolor lumbar.
+Respuesta: a
+Justificacion: Conocida como la "tríada de Guyon", su presencia suele indicar enfermedad avanzada; hoy en día, la mayoría de los tumores renales se diagnostican incidentalmente por imagen. La presencia de esta triada suele asociarse a enfermedad avanzada y peor pronóstico. Otros signos asociados: varicocele derecho de aparición súbita o síndromes paraneoplásicos.
+
+¿Qué síndrome genético se asocia con el desarrollo de carcinoma renal de células claras bilateral y quistes en el páncreas y el SNC?
+a. Síndrome de Birt-Hogg-Dubé.
+b. Enfermedad de Von Hippel-Lindau (VHL).
+c. Esclerosis tuberosa.
+d. Carcinoma papilar renal hereditario.
+Respuesta: b
+Justificacion: El síndrome VHL es causado por una mutación en el cromosoma 3p y es la causa hereditaria más común de carcinoma de células claras. Se asocia clásicamente con carcinoma renal de células claras bilateral y multifocal, hemangioblastomas del SNC y retina, quistes pancreáticos, tumores neuroendocrinos pancreáticos, feocromocitoma y quistes renales.
+
+De acuerdo con el sistema TNM, un tumor renal de 6 cm limitado al riñón se clasifica como:
+a. T1a
+b. T1b
+c. T2a
+d. T2b
+Respuesta: b
+Justificacion: Los tumores T1 están limitados al riñón; T1a es para lesiones menores a 4 cm y el T1b para lesiones mayores a 4 cm pero menores a 7 cm.
+
+¿Cuál es el tratamiento estándar de oro para un tumor renal T1a (menor a 4 cm) cuando es técnicamente factible?
+a. Nefrectomía radical.
+b. Nefrectomía parcial (cirugía preservadora de nefronas).
+c. Ablación por radiofrecuencia.
+d. Vigilancia activa.
+Respuesta: b
+Justificacion: La nefrectomía parcial ofrece resultados oncológicos similares a la radical en tumores pequeños, con el beneficio de preservar la función renal a largo plazo.
+
+¿Qué característica histológica define al Carcinoma Renal de tipo Cromófobo?
+a. Células con citoplasma claro y red de capilares prominente.
+b. Formaciones papilares con ejes vasculares.
+c. Células grandes con membranas celulares prominentes (aspecto vegetal) y halos perinucleares.
+d. Células en "tachuela" (hobnail cells).
+Respuesta: c
+Justificacion: El carcinoma cromófobo tiene un mejor pronóstico relativo y se tiñe positivamente con hierro coloidal de Hale. Deriva de las células intercaladas del túbulo colector y tiene características histológicas distintivas: halo perinuclear claro prominente (característico), membranas celulares gruesas y bien delimitadas (aspecto vegetal), núcleos irregulares con arrugas (raisinoid núcleo) y células grandes poligonales con citoplasma pálido o eosinófilo granular.
+
+¿Cuál es el factor de riesgo ambiental más importante para el desarrollo de carcinoma urotelial de tracto superior?
+a. Consumo de café.
+b. Tabaquismo.
+c. Exposición a colorantes de anilina.
+d. Uso de analgésicos con fenacetina.
+Respuesta: b
+Justificacion: El tabaquismo aumenta significativamente el riesgo de todos los tumores uroteliales (vejiga y tracto superior).
+
+En un paciente con diagnóstico de carcinoma urotelial en el uréter distal, ¿cuál es la probabilidad aproximada de desarrollar un cáncer de vejiga sincrónico o metacrónico?
+a. 10%
+b. 20%
+c. 30-50%
+d. > 80%
+Respuesta: c
+Justificacion: Existe un fuerte efecto de "campo de cancerización" en el urotelio; los pacientes con tumores de tracto urinario superior tienen un riesgo elevado de tumores en la vejiga, lo que requiere un seguimiento cistoscópico estrecho.
+
+¿Cuál es el tratamiento quirúrgico estándar para el carcinoma urotelial de tracto superior de alto grado o de gran volumen?
+a. Ureterectomía segmentaria.
+b. Nefroureterectomía radical con rodete vesical.
+c. Nefrectomía radical únicamente.
+d. Fulguración endoscópica con láser.
+Respuesta: b
+Justificacion: La nefroureterectomía completa, incluyendo la extirpación del orificio ureteral (rodete vesical), es necesaria para minimizar la recurrencia local. Está indicado en tumores de alto grado, invadidos, multifocales, de gran volumen o con hidronefrosis asociada. La cirugía conservadora se reserva para tumores de bajo grado, bajo volumen o riñón único.
+
+¿Qué toxina ambiental se ha relacionado específicamente con la Nefropatía de los Balcanes y el aumento de tumores uroteliales de tracto superior?
+a. Arsénico.
+b. Ácido aristolóquico.
+c. Cadmio.
+d. Plomo.
+Respuesta: b
+Justificacion: El ácido aristolóquico (presente en plantas del género Aristolochia) es un potente carcinógeno urotelial identificado en la enfermedad de los Balcanes y en algunas hierbas medicinales chinas.
+
+¿Cuál es el síntoma de presentación más frecuente en el carcinoma urotelial de tracto superior?
+a. Dolor tipo cólico renal.
+b. Hematuria macroscópica indolora.
+c. Masa palpable en flanco.
+d. Pérdida de peso.
+Respuesta: b
+Justificacion: Al igual que en el cáncer de vejiga, la hematuria (visible o microscópica) es el signo inicial en el 75-80% de los casos.
+
+¿Cuál es el síntoma de presentación más frecuente en pacientes con cáncer de vejiga?
+a. Disuria y urgencia miccional.
+b. Hematuria macroscópica indolora.
+c. Dolor suprapúbico crónico.
+d. Incontinencia urinaria de esfuerzo.
+Respuesta: b
+Justificacion: La hematuria macroscópica indolora durante todo el chorro miccional es el signo clásico de neoplasia urotelial hasta que se demuestre lo contrario.
+
+Según la clasificación de la OMS/ISUP, ¿qué término se utiliza para describir una lesión papilar con mínimo atipismo celular y un riesgo muy bajo de progresión?
+a. Carcinoma in situ (CIS).
+b. Neoplasia urotelial papilar de bajo potencial de malignidad (PUNLMP).
+c. Carcinoma urotelial de bajo grado.
+d. Papiloma urotelial.
+Respuesta: b
+Justificacion: El PUNLMP describe lesiones que, aunque requieren seguimiento, tienen una probabilidad extremadamente baja de invadir el músculo.
+
+En un paciente con cáncer de vejiga no músculo-invasor (NMIBC) de riesgo intermedio o alto, ¿cuál es el beneficio principal de la administración de una dosis única de quimioterapia intravesical (como Mitomicina C) inmediatamente después de la RTU-V?
+a. Elimina la necesidad de cistectomía.
+b. Reduce la tasa de recurrencia temprana al destruir células tumorales circulantes.
+c. Previene la progresión a enfermedad músculo-invasora.
+d. Trata focos de carcinoma in situ (CIS) concomitantes.
+Respuesta: b
+Justificacion: La quimioterapia postoperatoria inmediata actúa sobre las células que se desprenden durante la resección, evitando que se implanten de nuevo en la mucosa vesical. Reduce la recurrencia en 10-15%, no reduce la progresión a músculo invasor y no sustituye a la BCG. Está contraindicada si hay perforación vesical y hematuria significativa persistente.
+
+¿Qué característica define al Carcinoma in Situ (CIS) de la vejiga?
+a. Es un tumor papilar de bajo grado.
+b. Es una lesión plana de alto grado limitada al epitelio (Tis).
+c. Siempre se asocia con invasión de la lámina propia.
+d. Es una lesión benigna que no requiere tratamiento agresivo.
+Respuesta: b
+Justificacion: El CIS es, por definición, una neoplasia de alto grado y plana; a pesar de no ser invasora inicialmente, tiene un alto potencial de progresión si no se trata con BCG. Es una lesión plana no papilar de alto grado, limitada al epitelio urotelial, sin invasión de la lámina propia ni del músculo. Si se cuenta con presencia de CIS siempre es de alto riesgo. El tratamiento estándar es BCG intravesical.
+
+¿A partir de qué estadio TNM se considera que el cáncer de vejiga es "músculo-invasor"?
+a. T1 (Invasión de lámina propia).
+b. T2 (Invasión del músculo detrusor).
+c. T3 (Invasión de grasa perivesical).
+d. T4 (Invasión de órganos adyacentes).
+Respuesta: b
+Justificacion: El estadio T2 marca la invasión de la muscularis propria, lo que generalmente indica la necesidad de tratamientos radicales como la cistectomía o la quimiorradiación.
+
+¿Cuál es el tratamiento estándar de oro para el cáncer de vejiga músculo-invasor (T2-T4a, N0, M0) en pacientes aptos para cirugía?
+a. RTU-V repetida cada 3 meses.
+b. Quimioterapia neoadyuvante basada en platinos seguida de Cistectomía Radical con Linfadenectomía.
+c. Solo Radioterapia externa.
+d. BCG intravesical de mantenimiento.
+Respuesta: b
+Justificacion: La quimioterapia neoadyuvante basada en cisplatino seguida de cirugía radical ha demostrado mejorar la supervivencia global en comparación con la cirugía sola. Esquemas típicos son MVAC o Gemcitabina + cisplatino. Siempre se debe realizar linfadenectomía pélvica bilateral extendida.
+
+¿Cuál es el segmento intestinal más utilizado para la creación de un conducto ileal (Bricker)?
+a. Yeyuno proximal.
+b. Íleon terminal (a 15-20 cm de la válvula ileocecal).
+c. Colon descendente.
+d. Recto.
+Respuesta: b
+Justificacion: El íleon terminal es preferido por su movilidad, vascularización constante y menor tasa de complicaciones metabólicas comparado con el yeyuno. Se utiliza un segmento de íleon distal (15-20 cm), los uréteres se anastomosan al segmento y el extremo distal se exterioriza como estoma cutáneo (no hay reservorio, el drenaje es continuo a bolsa externa). Está indicada tras cistectomía radical por cáncer vesical en pacientes no candidatos a derivación continente.
+
+¿Cuál es la alteración ácido-base más común observada en pacientes con derivaciones urinarias que utilizan segmentos de íleon o colon?
+a. Acidosis metabólica hiperclorémica con Anión GAP normal.
+b. Alcalosis metabólica hipocalémica.
+c. Acidosis respiratoria compensada.
+d. Alcalosis respiratoria.
+Respuesta: a
+Justificacion: La reabsorción de cloruro y amonio a través de la mucosa intestinal en contacto con la orina genera una acidosis metabólica con brecha aniónica normal (hiperclorémica). Hay reabsorción de amonio y cloro desde la orina y secreción de bicarbonato hacia la luz intestinal, lo cual es más frecuente en derivaciones con colon.
+
+¿Qué vitamina suele requerir suplementación a largo plazo en pacientes a los que se les ha resecado un segmento largo de íleon terminal para una neovejiga?
+a. Vitamina C.
+b. Vitamina B12.
+c. Vitamina D.
+d. Vitamina K.
+Respuesta: b
+Justificacion: El íleon terminal es el sitio exclusivo de absorción del complejo factor intrínseco-vitamina B12; su resección extensa puede llevar a anemia megaloblástica tras varios años.
+
+Durante una linfadenectomía pélvica por cáncer de vejiga, ¿cuál es el límite anatómico superior del mapeo estándar?
+a. Bifurcación de la aorta.
+b. Arterias ilíacas comunes (bifurcación).
+c. Nervio genitofemoral.
+d. Vena circunfleja ilíaca profunda.
+Respuesta: b
+Justificacion: Una linfadenectomía estándar incluye los ganglios obturadores e ilíacos externos e internos hasta la bifurcación de las ilíacas comunes. Sus límites son: superior la bifurcación de la arteria ilíaca común, inferior el nervio obturador, lateral el nervio genitofemoral, medial la vejiga y vasos ilíacos internos, y posterior el nervio obturador. Una linfadenectomía extendida subiría hasta la bifurcación aórtica o arteria mesentérica inferior.

@@ -1,35 +1,81 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
+import re
 
-# Conectar a tu base de datos usando tu llave
+# 1. Conectar a Firebase
 cred = credentials.Certificate("llave.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-# Las primeras 3 preguntas de tu banco
-preguntas = [
-  {
-    "id": "URO-001", "categoria": "Embriología y Anatomía",
-    "pregunta": "Durante el desarrollo embrionario, ¿cuál es la estructura precursora del epidídimo, los conductos deferentes y las vesículas seminales?",
-    "opciones": { "A": "Conducto de Müller (paramesonéfrico)", "B": "Conducto de Wolff (mesonéfrico)", "C": "Seno urogenital", "D": "Tubérculo genital" },
-    "respuesta_correcta": "B", "justificacion": "En el feto masculino, la testosterona promueve la diferenciación de los conductos mesonéfricos (Wolff) en las estructuras del tracto reproductivo interno."
-  },
-  {
-    "id": "URO-002", "categoria": "Embriología y Anatomía",
-    "pregunta": "¿A partir de qué semana de gestación comienza la producción de orina por el metanefros?",
-    "opciones": { "A": "6ª semana", "B": "8ª semana", "C": "10ª semana", "D": "12ª semana" },
-    "respuesta_correcta": "C", "justificacion": "El metanefros (riñón definitivo) se vuelve funcional aproximadamente en la 10ª semana de gestación."
-  },
-  {
-    "id": "URO-003", "categoria": "Embriología y Anatomía",
-    "pregunta": "¿Cuál es el origen nervioso del reflejo cremastérico?",
-    "opciones": { "A": "Nervio ilioinguinal (L1)", "B": "Nervio genitofemoral (L1-L2)", "C": "Nervio pudendo (S2-S4)", "D": "Nervio obturador" },
-    "respuesta_correcta": "B", "justificacion": "El nervio genitofemoral, específicamente su rama genital, es responsable de la vía eferente del reflejo cremastérico."
-  }
-]
+def procesar_y_subir():
+    print("Leyendo borrador_2.txt...")
+    try:
+        with open("borrador_2.txt", "r", encoding="utf-8") as f:
+            texto = f.read()
+    except FileNotFoundError:
+        print("Error: No se encontró el archivo borrador_2.txt en la carpeta actual.")
+        return
 
-print("Subiendo preguntas a la nube...")
-for p in preguntas:
-    db.collection("preguntas").document(p["id"]).set(p)
+    # 2. Expresión regular ajustada al nuevo formato numerado
+    patron = re.compile(
+        r"(?:^|\n)(\d+)\.\s+(.*?)\n"
+        r"\s*a\.\s+(.*?)\n"
+        r"\s*b\.\s+(.*?)\n"
+        r"\s*c\.\s+(.*?)\n"
+        r"\s*d\.\s+(.*?)\n"
+        r"\s*Respuesta:\s*([a-dA-D])\n"
+        r"\s*Justificaci[oó]n:\s*(.*?)(?=\n\s*\n|\n\d+\.\s+|\Z)", 
+        re.IGNORECASE | re.DOTALL
+    )
 
-print("¡Preguntas subidas con éxito! Regresa a tu navegador y actualiza la página.")
+    matches = list(patron.finditer(texto))
+    
+    if not matches:
+        print("No se encontraron preguntas con el formato esperado. Revisa el texto.")
+        return
+        
+    print(f"¡Se detectaron {len(matches)} preguntas! Subiendo a Firestore...")
+    
+    batch = db.batch()
+    contador = 0
+
+    for match in matches:
+        num = match.group(1)
+        pregunta = match.group(2).strip().replace('\n', ' ')
+        opA = match.group(3).strip().replace('\n', ' ')
+        opB = match.group(4).strip().replace('\n', ' ')
+        opC = match.group(5).strip().replace('\n', ' ')
+        opD = match.group(6).strip().replace('\n', ' ')
+        respuesta = match.group(7).strip().upper()
+        justificacion = match.group(8).strip().replace('\n', ' ')
+        
+        # 3. Estructurar el documento para la base de datos
+        doc_data = {
+            "id": f"URO-{int(num):03d}",
+            "categoria": "Simulador CONAMEU",
+            "pregunta": pregunta,
+            "opciones": {
+                "A": opA,
+                "B": opB,
+                "C": opC,
+                "D": opD
+            },
+            "respuesta_correcta": respuesta,
+            "justificacion": justificacion
+        }
+        
+        doc_ref = db.collection("preguntas").document(doc_data["id"])
+        batch.set(doc_ref, doc_data)
+        contador += 1
+        
+        # Firestore requiere subir en lotes máximos de 500
+        if contador % 400 == 0:
+            batch.commit()
+            batch = db.batch()
+            print(f"Progreso: {contador} preguntas inyectadas...")
+
+    batch.commit()
+    print(f"¡Éxito total! {contador} preguntas inyectadas a la base de datos.")
+
+if __name__ == '__main__':
+    procesar_y_subir()

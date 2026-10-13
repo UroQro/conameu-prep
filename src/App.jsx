@@ -11,6 +11,7 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [currentView, setCurrentView] = useState('dashboard');
   const [loading, setLoading] = useState(true);
+  const [simCount, setSimCount] = useState(30);
 
   useEffect(() => {
     return onAuthStateChanged(auth, (currentUser) => {
@@ -19,28 +20,32 @@ export default function App() {
     });
   }, []);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center bg-slate-50"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-uroblue-600"></div></div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center bg-slate-900"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-uroblue-500"></div></div>;
   if (!user) return <Auth />;
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-uroblue-100">
-      <nav className="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center shadow-sm sticky top-0 z-10">
+    <div className="min-h-screen bg-slate-900 font-sans text-slate-200 selection:bg-uroblue-900 flex flex-col">
+      <nav className="bg-slate-800 border-b border-slate-700 px-4 md:px-8 py-4 flex justify-between items-center shadow-md sticky top-0 z-10">
         <div className="flex items-center gap-3 cursor-pointer" onClick={() => setCurrentView('dashboard')}>
-          <div className="w-8 h-8 bg-uroblue-600 rounded-lg flex items-center justify-center text-white font-bold">C</div>
-          <h1 className="text-xl font-bold text-slate-800 tracking-tight">CONAMEU Prep</h1>
+          <div className="w-8 h-8 bg-uroblue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm md:text-base">C</div>
+          <h1 className="text-lg md:text-xl font-bold text-white tracking-tight">CONAMEU Prep</h1>
         </div>
-        <div className="flex items-center gap-6">
-          <span className="text-sm font-medium text-slate-500 hidden md:block">{user.email}</span>
-          <button onClick={() => setCurrentView('dashboard')} className="text-sm font-semibold text-slate-600 hover:text-uroblue-600 transition-colors">Menú</button>
-          <button onClick={() => auth.signOut()} className="text-sm font-semibold text-red-600 hover:text-red-700 bg-red-50 px-4 py-2 rounded-lg transition-colors">Salir</button>
+        <div className="flex items-center gap-4 md:gap-6">
+          <button onClick={() => setCurrentView('dashboard')} className="text-sm font-semibold text-slate-300 hover:text-white transition-colors">Menú</button>
+          <button onClick={() => auth.signOut()} className="text-sm font-semibold text-red-400 hover:text-red-300 bg-red-900/30 px-3 py-1.5 md:px-4 md:py-2 rounded-lg transition-colors">Salir</button>
         </div>
       </nav>
-      <main className="max-w-5xl mx-auto p-6 mt-4">
-        {currentView === 'dashboard' && <Dashboard setView={setCurrentView} />}
-        {currentView === 'sim' && <Simulator setView={setCurrentView} user={user} />}
+      
+      <main className="flex-1 w-full max-w-5xl mx-auto p-4 md:p-6 mt-2 md:mt-4">
+        {currentView === 'dashboard' && <Dashboard setView={setCurrentView} setSimCount={setSimCount} />}
+        {currentView === 'sim' && <Simulator setView={setCurrentView} user={user} simCount={simCount} />}
         {currentView === 'errors' && <ErrorReview setView={setCurrentView} user={user} />}
         {currentView === 'history' && <History setView={setCurrentView} user={user} />}
       </main>
+      
+      <footer className="text-center text-slate-500 text-xs md:text-sm py-6 border-t border-slate-800 mt-auto">
+        © 2026 RSZ | Versión 1.1.0
+      </footer>
     </div>
   );
 }

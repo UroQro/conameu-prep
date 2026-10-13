@@ -3,7 +3,7 @@ import { collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore
 import { db } from '../firebase';
 import { Check, X, ArrowRight, RotateCcw } from 'lucide-react';
 
-export default function Simulator({ setView, user }) {
+export default function Simulator({ setView, user, simCount }) {
   const [preguntas, setPreguntas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -18,7 +18,7 @@ export default function Simulator({ setView, user }) {
       try {
         const querySnapshot = await getDocs(collection(db, "preguntas"));
         const data = querySnapshot.docs.map(doc => doc.data());
-        const shuffled = data.sort(() => 0.5 - Math.random()).slice(0, 30);
+        const shuffled = data.sort(() => 0.5 - Math.random()).slice(0, simCount);
         setPreguntas(shuffled);
         setLoading(false);
       } catch (error) {
@@ -26,7 +26,7 @@ export default function Simulator({ setView, user }) {
       }
     };
     fetchPreguntas();
-  }, []);
+  }, [simCount]);
 
   const handleAnswer = (key) => {
     if (isAnswered) return;
@@ -37,14 +37,12 @@ export default function Simulator({ setView, user }) {
     if (key === p.respuesta_correcta) {
       setScore(s => s + 1);
     } else {
-      // Guardamos la pregunta entera como error
       setErrores(prev => [...prev, p]);
     }
   };
 
   const nextQuestion = async () => {
     if (currentIdx + 1 >= preguntas.length) {
-      // Hemos terminado, vamos a guardar en Firebase
       setCurrentIdx(i => i + 1);
       const calif = Math.round((score / preguntas.length) * 100);
       try {
@@ -66,28 +64,28 @@ export default function Simulator({ setView, user }) {
     }
   };
 
-  if (loading) return <div className="flex justify-center p-20"><div className="animate-spin h-10 w-10 border-b-2 border-uroblue-600 rounded-full"></div></div>;
-  if (preguntas.length === 0) return <div className="text-center p-20 font-bold text-slate-500">Aún no hay preguntas.</div>;
+  if (loading) return <div className="flex justify-center p-20"><div className="animate-spin h-10 w-10 border-b-2 border-uroblue-500 rounded-full"></div></div>;
+  if (preguntas.length === 0) return <div className="text-center p-20 font-bold text-slate-400">Aún no hay preguntas.</div>;
 
   if (currentIdx >= preguntas.length) {
     const calif = Math.round((score / preguntas.length) * 100);
     return (
-      <div className="max-w-2xl mx-auto bg-white p-10 rounded-3xl shadow-sm border border-slate-100 text-center mt-10 fade-in">
-        <h2 className="text-3xl font-extrabold text-slate-800 mb-2">Simulación Completada</h2>
-        {!saved && <p className="text-amber-500 font-bold mb-4">Guardando resultados en tu perfil...</p>}
-        {saved && <p className="text-emerald-500 font-bold mb-4">¡Resultados guardados correctamente!</p>}
+      <div className="max-w-2xl mx-auto bg-slate-800 p-6 md:p-10 rounded-3xl shadow-lg border border-slate-700 text-center mt-6 fade-in">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-2">Simulación Completada</h2>
+        {!saved && <p className="text-amber-400 font-bold mb-4 text-sm md:text-base">Guardando resultados...</p>}
+        {saved && <p className="text-emerald-400 font-bold mb-4 text-sm md:text-base">¡Resultados guardados en tu historial!</p>}
         
-        <div className="relative w-48 h-48 mx-auto mb-8 mt-4">
+        <div className="relative w-40 h-40 md:w-48 md:h-48 mx-auto mb-6 mt-4">
           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-            <path className="text-slate-100" strokeWidth="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            <path className="text-slate-700" strokeWidth="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
             <path className={`${calif >= 70 ? 'text-emerald-500' : 'text-amber-500'}`} strokeDasharray={`${calif}, 100`} strokeWidth="3" strokeLinecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
           </svg>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl font-black text-slate-800">{calif}%</div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl md:text-4xl font-black text-white">{calif}%</div>
         </div>
-        <p className="text-lg font-bold text-slate-700 mb-8">Acertaste {score} de {preguntas.length}</p>
-        <div className="flex justify-center gap-4">
-          <button onClick={() => window.location.reload()} className="flex items-center gap-2 px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl"><RotateCcw className="w-5 h-5" /> Repetir</button>
-          <button onClick={() => setView('dashboard')} className="flex items-center gap-2 px-6 py-3 bg-uroblue-600 text-white font-bold rounded-xl shadow-md hover:bg-uroblue-700">Ir al Menú <ArrowRight className="w-5 h-5" /></button>
+        <p className="text-base md:text-lg font-bold text-slate-300 mb-8">Acertaste {score} de {preguntas.length}</p>
+        <div className="flex flex-col sm:flex-row justify-center gap-3">
+          <button onClick={() => window.location.reload()} className="flex items-center justify-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl transition-colors"><RotateCcw className="w-5 h-5" /> Repetir</button>
+          <button onClick={() => setView('dashboard')} className="flex items-center justify-center gap-2 px-6 py-3 bg-uroblue-600 text-white font-bold rounded-xl shadow-md hover:bg-uroblue-500 transition-colors">Ir al Menú <ArrowRight className="w-5 h-5" /></button>
         </div>
       </div>
     );
@@ -98,34 +96,34 @@ export default function Simulator({ setView, user }) {
 
   return (
     <div className="max-w-3xl mx-auto fade-in">
-      <div className="flex justify-between items-center mb-6 bg-white px-6 py-4 rounded-2xl shadow-sm border border-slate-100">
-        <span className="bg-uroblue-50 text-uroblue-700 text-sm font-bold px-4 py-1.5 rounded-lg border border-uroblue-100">{p.categoria}</span>
-        <div className="font-bold text-slate-400">Pregunta {currentIdx + 1} de {preguntas.length}</div>
+      <div className="flex justify-between items-center mb-4 md:mb-6 bg-slate-800 px-4 md:px-6 py-3 md:py-4 rounded-2xl shadow-sm border border-slate-700">
+        <span className="bg-uroblue-900/50 text-uroblue-300 text-xs md:text-sm font-bold px-3 py-1 md:px-4 md:py-1.5 rounded-lg border border-uroblue-800/50">{p.categoria}</span>
+        <div className="font-bold text-slate-400 text-xs md:text-sm">Pregunta {currentIdx + 1} de {preguntas.length}</div>
       </div>
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 mb-6">
-        <h2 className="text-xl font-bold text-slate-800 mb-8">{p.pregunta}</h2>
-        <div className="space-y-4">
+      <div className="bg-slate-800 p-5 md:p-8 rounded-2xl shadow-sm border border-slate-700 mb-4 md:mb-6">
+        <h2 className="text-lg md:text-xl font-bold text-white mb-6 leading-snug">{p.pregunta}</h2>
+        <div className="space-y-3">
           {Object.entries(p.opciones).map(([key, val]) => {
-            let btnClass = "w-full text-left p-5 rounded-xl border-2 transition-all flex items-center gap-4 group ";
+            let btnClass = "w-full text-left p-3 md:p-4 rounded-xl border-2 transition-all flex items-center gap-3 md:gap-4 group ";
             let icon = null;
             if (!isAnswered) {
-              btnClass += "border-slate-100 bg-slate-50 hover:border-uroblue-400 hover:bg-uroblue-50 cursor-pointer text-slate-700";
+              btnClass += "border-slate-700 bg-slate-700/50 hover:border-uroblue-500 hover:bg-slate-700 cursor-pointer text-slate-200";
             } else {
               btnClass += "cursor-default ";
               if (key === p.respuesta_correcta) {
-                btnClass += "border-emerald-500 bg-emerald-50 text-emerald-900 shadow-sm";
-                icon = <Check className="w-5 h-5 text-emerald-600 ml-auto" />;
+                btnClass += "border-emerald-500 bg-emerald-900/30 text-emerald-100";
+                icon = <Check className="w-5 h-5 text-emerald-400 ml-auto shrink-0" />;
               } else if (key === selectedAns) {
-                btnClass += "border-red-400 bg-red-50 text-red-900";
-                icon = <X className="w-5 h-5 text-red-500 ml-auto" />;
+                btnClass += "border-red-500 bg-red-900/30 text-red-100";
+                icon = <X className="w-5 h-5 text-red-400 ml-auto shrink-0" />;
               } else {
-                btnClass += "border-slate-100 bg-slate-50 opacity-50";
+                btnClass += "border-slate-700 bg-slate-800 opacity-40 text-slate-400";
               }
             }
             return (
               <button key={key} onClick={() => handleAnswer(key)} disabled={isAnswered} className={btnClass}>
-                <span className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold shrink-0 ${!isAnswered ? 'bg-white border border-slate-200 group-hover:text-uroblue-600' : key === p.respuesta_correcta ? 'bg-emerald-200 text-emerald-800' : key === selectedAns ? 'bg-red-200 text-red-800' : 'bg-slate-200'}`}>{key}</span>
-                <span className="font-semibold leading-snug">{val}</span>
+                <span className={`w-7 h-7 md:w-8 md:h-8 rounded-lg flex items-center justify-center font-bold shrink-0 text-sm md:text-base ${!isAnswered ? 'bg-slate-800 border border-slate-600 group-hover:text-uroblue-400' : key === p.respuesta_correcta ? 'bg-emerald-600 text-white border-transparent' : key === selectedAns ? 'bg-red-600 text-white border-transparent' : 'bg-slate-700 border-slate-600'}`}>{key}</span>
+                <span className="font-medium text-sm md:text-base leading-snug">{val}</span>
                 {icon}
               </button>
             );
@@ -133,18 +131,18 @@ export default function Simulator({ setView, user }) {
         </div>
       </div>
       {isAnswered && (
-        <div className={`p-6 rounded-2xl mb-6 shadow-sm border flex gap-4 fade-in-up ${isCorrect ? 'bg-emerald-50 border-emerald-100' : 'bg-red-50 border-red-100'}`}>
-          <div className="shrink-0 mt-1">{isCorrect ? <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center"><Check className="text-emerald-600" /></div> : <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center"><X className="text-red-600" /></div>}</div>
+        <div className={`p-4 md:p-6 rounded-2xl mb-6 shadow-sm border flex gap-3 md:gap-4 fade-in-up ${isCorrect ? 'bg-emerald-900/20 border-emerald-800/50' : 'bg-red-900/20 border-red-800/50'}`}>
+          <div className="shrink-0 mt-0.5 md:mt-1">{isCorrect ? <div className="w-8 h-8 md:w-10 md:h-10 bg-emerald-900/50 rounded-full flex items-center justify-center"><Check className="text-emerald-400 w-5 h-5 md:w-6 md:h-6" /></div> : <div className="w-8 h-8 md:w-10 md:h-10 bg-red-900/50 rounded-full flex items-center justify-center"><X className="text-red-400 w-5 h-5 md:w-6 md:h-6" /></div>}</div>
           <div>
-            <h4 className={`font-black text-lg mb-2 ${isCorrect ? 'text-emerald-800' : 'text-red-800'}`}>{isCorrect ? '¡Correcto!' : `Incorrecto. Opción ${p.respuesta_correcta}`}</h4>
-            <p className="font-medium opacity-80 text-slate-800">{p.justificacion}</p>
+            <h4 className={`font-black text-base md:text-lg mb-1 md:mb-2 ${isCorrect ? 'text-emerald-400' : 'text-red-400'}`}>{isCorrect ? '¡Correcto!' : `Incorrecto. La respuesta es la ${p.respuesta_correcta}`}</h4>
+            <p className="font-medium text-sm md:text-base opacity-90 text-slate-300 leading-relaxed">{p.justificacion}</p>
           </div>
         </div>
       )}
       {isAnswered && (
-        <div className="flex justify-end fade-in">
-          <button onClick={nextQuestion} className="flex items-center gap-2 bg-slate-800 text-white font-bold py-3.5 px-8 rounded-xl hover:bg-slate-900 shadow-md">
-            {currentIdx + 1 === preguntas.length ? 'Finalizar y Guardar' : 'Siguiente'} <ArrowRight className="w-5 h-5" />
+        <div className="flex justify-end fade-in pb-10 md:pb-0">
+          <button onClick={nextQuestion} className="w-full md:w-auto flex items-center justify-center gap-2 bg-uroblue-600 text-white font-bold py-3.5 px-8 rounded-xl hover:bg-uroblue-500 shadow-md transition-colors">
+            {currentIdx + 1 === preguntas.length ? 'Finalizar' : 'Siguiente'} <ArrowRight className="w-5 h-5" />
           </button>
         </div>
       )}
