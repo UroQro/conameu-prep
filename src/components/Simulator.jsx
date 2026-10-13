@@ -3,7 +3,7 @@ import { collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore
 import { db } from '../firebase';
 import { Check, X, ArrowRight, RotateCcw } from 'lucide-react';
 
-export default function Simulator({ setView, user, simCount }) {
+export default function Simulator({ setView, user, config }) {
   const [preguntas, setPreguntas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -11,14 +11,33 @@ export default function Simulator({ setView, user, simCount }) {
   const [isAnswered, setIsAnswered] = useState(false);
   const [score, setScore] = useState(0);
   const [errores, setErrores] = useState([]);
+  const [answeredIds, setAnsweredIds] = useState([]);
   const [saved, setSaved] = useState(false);
+  const [exhausted, setExhausted] = useState(false);
 
   useEffect(() => {
     const fetchPreguntas = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "preguntas"));
-        const data = querySnapshot.docs.map(doc => doc.data());
-        const shuffled = data.sort(() => 0.5 - Math.random()).slice(0, simCount);
+        let allQuestions = querySnapshot.docs.map(doc => doc.data());
+
+        if (config.mode === 'new') {
+          const userExamsSnap = await getDocs(collection(db, "users", user.uid, "exams"));
+          let seenIds = new Set();
+          userExamsSnap.forEach(doc => {
+            const data = doc.data();
+            if (data.answeredIds) data.answeredIds.forEach(id => seenIds.add(id));
+          });
+          allQuestions = allQuestions.filter(q => !seenIds.has(q.id));
+        }
+
+        if (allQuestions.length === 0) {
+          setExhausted(true);
+          setLoading(false);
+          return;
+        }
+
+        const shuffled = allQuestions.sort(() => 0.5 - Math.random()).slice(0, config.count);
         setPreguntas(shuffled);
         setLoading(false);
       } catch (error) {
@@ -26,7 +45,7 @@ export default function Simulator({ setView, user, simCount }) {
       }
     };
     fetchPreguntas();
-  }, [simCount]);
+  }, [config, user]);
 
   const handleAnswer = (key) => {
     if (isAnswered) return;
@@ -34,6 +53,8 @@ export default function Simulator({ setView, user, simCount }) {
     setIsAnswered(true);
     
     const p = preguntas[currentIdx];
+    setAnsweredIds(prev => [...prev, p.id]);
+    
     if (key === p.respuesta_correcta) {
       setScore(s => s + 1);
     } else {
@@ -51,6 +72,7 @@ export default function Simulator({ setView, user, simCount }) {
           totalCorrect: score,
           totalQuestions: preguntas.length,
           errores: errores,
+          answeredIds: answeredIds,
           date: serverTimestamp()
         });
         setSaved(true);
@@ -65,6 +87,7 @@ export default function Simulator({ setView, user, simCount }) {
   };
 
   if (loading) return <div className="flex justify-center p-20"><div className="animate-spin h-10 w-10 border-b-2 border-uroblue-500 rounded-full"></div></div>;
+  if (exhausted) return <div className="text-center p-20"><h2 className="text-2xl font-bold text-emerald-400 mb-4">¡Felicidades!</h2><p className="text-slate-400 mb-6">Has respondido todo el banco de preguntas. Genera un simulador aleatorio para repasar.</p><button onClick={() => setView('dashboard')} className="text-uroblue-400 font-bold hover:underline">Volver</button></div>;
   if (preguntas.length === 0) return <div className="text-center p-20 font-bold text-slate-400">Aún no hay preguntas.</div>;
 
   if (currentIdx >= preguntas.length) {
@@ -95,7 +118,7 @@ export default function Simulator({ setView, user, simCount }) {
   const isCorrect = selectedAns === p.respuesta_correcta;
 
   return (
-    <div className="max-w-3xl mx-auto fade-in">
+    <div className="max-w-3xl mx-auto fade-in pb-10">
       <div className="flex justify-between items-center mb-4 md:mb-6 bg-slate-800 px-4 md:px-6 py-3 md:py-4 rounded-2xl shadow-sm border border-slate-700">
         <span className="bg-uroblue-900/50 text-uroblue-300 text-xs md:text-sm font-bold px-3 py-1 md:px-4 md:py-1.5 rounded-lg border border-uroblue-800/50">{p.categoria}</span>
         <div className="font-bold text-slate-400 text-xs md:text-sm">Pregunta {currentIdx + 1} de {preguntas.length}</div>

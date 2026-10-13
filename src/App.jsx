@@ -11,7 +11,7 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [currentView, setCurrentView] = useState('dashboard');
   const [loading, setLoading] = useState(true);
-  const [simCount, setSimCount] = useState(30);
+  const [simConfig, setSimConfig] = useState({ count: 30, mode: 'random' });
 
   useEffect(() => {
     return onAuthStateChanged(auth, (currentUser) => {
@@ -37,14 +37,14 @@ export default function App() {
       </nav>
       
       <main className="flex-1 w-full max-w-5xl mx-auto p-4 md:p-6 mt-2 md:mt-4">
-        {currentView === 'dashboard' && <Dashboard setView={setCurrentView} setSimCount={setSimCount} />}
-        {currentView === 'sim' && <Simulator setView={setCurrentView} user={user} simCount={simCount} />}
+        {currentView === 'dashboard' && <Dashboard setView={setCurrentView} setSimConfig={setSimConfig} />}
+        {currentView === 'sim' && <Simulator setView={setCurrentView} user={user} config={simConfig} />}
         {currentView === 'errors' && <ErrorReview setView={setCurrentView} user={user} />}
         {currentView === 'history' && <History setView={setCurrentView} user={user} />}
       </main>
       
       <footer className="text-center text-slate-500 text-xs md:text-sm py-6 border-t border-slate-800 mt-auto">
-        © 2026 RSZ | Versión 1.1.0
+        © 2026 RSZ | Versión 1.2.0
       </footer>
     </div>
   );
