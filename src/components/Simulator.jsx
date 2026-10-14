@@ -66,7 +66,6 @@ export default function Simulator({ setView, user, config, setAnkiConfig }) {
         setLoading(false);
       } catch (error) {
         console.error("Error al preparar preguntas del simulador:", error);
-        // Fallback local garantizado
         const fallback = generarPreguntasSimulador({
           disciplina: config.disciplina || 'todas',
           dificultad: config.dificultad || 'todas',
@@ -115,7 +114,6 @@ export default function Simulator({ setView, user, config, setAnkiConfig }) {
 
   const nextQuestion = async () => {
     if (currentIdx + 1 >= preguntas.length) {
-      // Fin del simulador
       setCurrentIdx(i => i + 1);
       const calif = Math.round((score / preguntas.length) * 100);
       try {
@@ -141,6 +139,7 @@ export default function Simulator({ setView, user, config, setAnkiConfig }) {
       setCurrentIdx(i => i + 1);
       setSelectedAns(null);
       setIsAnswered(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -156,63 +155,61 @@ export default function Simulator({ setView, user, config, setAnkiConfig }) {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center p-20 space-y-4">
-        <div className="animate-spin h-12 w-12 border-4 border-uroblue-500 border-t-transparent rounded-full"></div>
-        <p className="text-slate-400 font-bold text-sm">Aleatorizando banco urológico y cargando simulador...</p>
+      <div className="flex flex-col items-center justify-center p-12 md:p-20 space-y-3">
+        <div className="animate-spin h-10 w-10 sm:h-12 sm:w-12 border-4 border-uroblue-500 border-t-transparent rounded-full"></div>
+        <p className="text-slate-400 font-bold text-xs sm:text-sm text-center">Aleatorizando preguntas urológicas...</p>
       </div>
     );
   }
 
   if (exhausted) {
     return (
-      <div className="max-w-xl mx-auto text-center p-10 md:p-14 bg-slate-800 rounded-3xl border border-slate-700 shadow-xl mt-8">
-        <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-4">
-          <Award className="w-8 h-8" />
+      <div className="max-w-xl mx-auto text-center p-6 sm:p-10 md:p-14 bg-slate-800 rounded-3xl border border-slate-700 shadow-xl mt-4">
+        <div className="w-14 h-14 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-3">
+          <Award className="w-7 h-7" />
         </div>
-        <h2 className="text-2xl font-black text-white mb-3">¡Excelente progreso!</h2>
-        <p className="text-slate-400 mb-6 text-sm leading-relaxed">
+        <h2 className="text-xl sm:text-2xl font-black text-white mb-2">¡Excelente progreso!</h2>
+        <p className="text-slate-400 mb-6 text-xs sm:text-sm leading-relaxed">
           Has contestado todas las preguntas disponibles con el filtro seleccionado ({config.disciplina !== 'todas' ? DISCIPLINAS[config.disciplina]?.nombre : 'todo el banco'}).
         </p>
-        <div className="flex justify-center gap-3">
-          <button 
-            onClick={() => setView('dashboard')} 
-            className="px-6 py-3 bg-uroblue-600 hover:bg-uroblue-500 text-white font-bold rounded-xl transition-colors text-sm shadow"
-          >
-            Volver al Menú
-          </button>
-        </div>
+        <button 
+          onClick={() => setView('dashboard')} 
+          className="w-full sm:w-auto px-6 py-3 bg-uroblue-600 hover:bg-uroblue-500 text-white font-bold rounded-xl transition-colors text-sm shadow"
+        >
+          Volver al Menú
+        </button>
       </div>
     );
   }
 
   if (preguntas.length === 0) {
     return (
-      <div className="text-center p-20 font-bold text-slate-400">
+      <div className="text-center p-12 font-bold text-slate-400">
         No se encontraron preguntas con los filtros seleccionados.
         <button onClick={() => setView('dashboard')} className="block mx-auto mt-4 text-uroblue-400 underline">Volver</button>
       </div>
     );
   }
 
-  // Pantalla de Resultados al terminar el simulador
+  // Pantalla de Resultados
   if (currentIdx >= preguntas.length) {
     const calif = Math.round((score / preguntas.length) * 100);
     const aprobado = calif >= 70;
 
     return (
-      <div className="max-w-2xl mx-auto bg-slate-800 p-6 md:p-10 rounded-3xl shadow-2xl border border-slate-700 text-center mt-4 fade-in">
-        <div className="inline-flex items-center gap-2 bg-slate-900 px-4 py-1.5 rounded-full text-xs font-bold text-slate-400 border border-slate-700 mb-4">
-          <span>Modo: {config.mode === 'weakness' ? '🎯 Refuerzo de Debilidades' : config.mode === 'new' ? '🆕 No Contestadas' : '🎲 Aleatorio'}</span>
+      <div className="max-w-2xl mx-auto bg-slate-800 p-5 sm:p-8 md:p-10 rounded-3xl shadow-2xl border border-slate-700 text-center mt-2 fade-in">
+        <div className="inline-flex items-center gap-1.5 bg-slate-900 px-3 py-1 rounded-full text-[11px] font-bold text-slate-400 border border-slate-700 mb-3">
+          <span>{config.mode === 'weakness' ? '🎯 Debilidades' : config.mode === 'new' ? '🆕 No Contestadas' : '🎲 Aleatorio'}</span>
           {config.disciplina !== 'todas' && <span>• {DISCIPLINAS[config.disciplina]?.shortName}</span>}
         </div>
 
-        <h2 className="text-2xl md:text-3xl font-black text-white mb-2">Simulación Finalizada</h2>
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white mb-1.5">Simulación Finalizada</h2>
         
-        {!saved && <p className="text-amber-400 font-bold mb-4 text-xs md:text-sm animate-pulse">Guardando resultados y actualizando tus métricas...</p>}
-        {saved && <p className="text-emerald-400 font-bold mb-4 text-xs md:text-sm flex items-center justify-center gap-1.5"><Check className="w-4 h-4" /> Resultados guardados y métricas actualizadas</p>}
+        {!saved && <p className="text-amber-400 font-bold mb-3 text-xs animate-pulse">Guardando resultados y actualizando métricas...</p>}
+        {saved && <p className="text-emerald-400 font-bold mb-3 text-xs flex items-center justify-center gap-1"><Check className="w-3.5 h-3.5" /> Resultados guardados</p>}
         
         {/* Gráfico circular de porcentaje */}
-        <div className="relative w-40 h-40 md:w-48 md:h-48 mx-auto mb-4 mt-2">
+        <div className="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto mb-3 mt-1">
           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
             <path className="text-slate-700" strokeWidth="3" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
             <path 
@@ -226,33 +223,33 @@ export default function Simulator({ setView, user, config, setAnkiConfig }) {
             />
           </svg>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div className="text-3xl md:text-4xl font-black text-white">{calif}%</div>
-            <p className={`text-[11px] font-bold uppercase tracking-wider ${aprobado ? 'text-emerald-400' : 'text-amber-400'}`}>
+            <div className="text-2xl sm:text-3xl md:text-4xl font-black text-white">{calif}%</div>
+            <p className={`text-[10px] sm:text-[11px] font-bold uppercase tracking-wider ${aprobado ? 'text-emerald-400' : 'text-amber-400'}`}>
               {aprobado ? 'Aprobado' : 'Por Mejorar'}
             </p>
           </div>
         </div>
 
-        <p className="text-base md:text-lg font-bold text-slate-300 mb-6">
+        <p className="text-sm sm:text-base font-bold text-slate-300 mb-5">
           Acertaste <span className="text-white font-black">{score}</span> de <span className="text-white font-black">{preguntas.length}</span> reactivos
         </p>
 
-        {/* Desglose por subdisciplina en este simulador */}
+        {/* Desglose por subdisciplina en este examen */}
         {Object.keys(sessionDiscStats).length > 0 && (
-          <div className="bg-slate-900/70 p-4 md:p-5 rounded-2xl border border-slate-700/80 mb-6 text-left">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-              Rendimiento por Subdisciplina en este Examen:
+          <div className="bg-slate-900/70 p-3.5 sm:p-4 rounded-2xl border border-slate-700/80 mb-5 text-left">
+            <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2.5">
+              Rendimiento por Subdisciplina:
             </h4>
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {Object.entries(sessionDiscStats).map(([dKey, dVal]) => {
                 const discMeta = DISCIPLINAS[dKey] || { nombre: dVal.nombre, color: 'blue' };
                 const pct = Math.round((dVal.correct / dVal.total) * 100);
                 return (
-                  <div key={dKey} className="flex items-center justify-between text-xs font-medium bg-slate-800/80 p-2 rounded-xl border border-slate-700/50">
+                  <div key={dKey} className="flex items-center justify-between text-xs bg-slate-800/80 p-2 rounded-xl border border-slate-700/50">
                     <span className="text-slate-200 font-bold truncate pr-2">{discMeta.nombre || dVal.nombre}</span>
-                    <div className="flex items-center gap-3 shrink-0">
-                      <span className="text-slate-400">{dVal.correct}/{dVal.total} aciertos</span>
-                      <span className={`font-black px-2 py-0.5 rounded text-[11px] ${pct >= 70 ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-amber-950 text-amber-400 border border-amber-800'}`}>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-slate-400 text-[11px]">{dVal.correct}/{dVal.total}</span>
+                      <span className={`font-black px-1.5 py-0.5 rounded text-[10px] ${pct >= 70 ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-amber-950 text-amber-400 border border-amber-800'}`}>
                         {pct}%
                       </span>
                     </div>
@@ -263,12 +260,12 @@ export default function Simulator({ setView, user, config, setAnkiConfig }) {
           </div>
         )}
 
-        {/* Botones de Acción */}
-        <div className="flex flex-col sm:flex-row justify-center gap-3">
+        {/* Botones de Acción (apilados en móvil para fácil acceso) */}
+        <div className="flex flex-col sm:flex-row justify-center gap-2.5">
           {errores.length > 0 && (
             <button 
               onClick={openAnkiFromErrors}
-              className="flex items-center justify-center gap-2 px-5 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl transition-colors shadow"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl transition-all shadow text-xs sm:text-sm active:scale-95"
             >
               <Brain className="w-4 h-4" /> Estudiar {errores.length} errores en Anki
             </button>
@@ -276,14 +273,14 @@ export default function Simulator({ setView, user, config, setAnkiConfig }) {
 
           <button 
             onClick={() => window.location.reload()} 
-            className="flex items-center justify-center gap-2 px-5 py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl transition-colors"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl transition-all text-xs sm:text-sm active:scale-95"
           >
             <RotateCcw className="w-4 h-4" /> Repetir
           </button>
 
           <button 
             onClick={() => setView('dashboard')} 
-            className="flex items-center justify-center gap-2 px-6 py-3 bg-uroblue-600 text-white font-bold rounded-xl shadow-md hover:bg-uroblue-500 transition-colors"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-uroblue-600 text-white font-bold rounded-xl shadow-md hover:bg-uroblue-500 transition-all text-xs sm:text-sm active:scale-95"
           >
             Ir al Menú <ArrowRight className="w-4 h-4" />
           </button>
@@ -304,41 +301,39 @@ export default function Simulator({ setView, user, config, setAnkiConfig }) {
   };
 
   return (
-    <div className="max-w-3xl mx-auto fade-in pb-10">
+    <div className="max-w-3xl mx-auto fade-in pb-16 md:pb-6 space-y-3 sm:space-y-4">
       {/* Barra superior con Disciplina, Dificultad y Contador */}
-      <div className="flex justify-between items-center mb-4 md:mb-6 bg-slate-800 px-4 md:px-6 py-3 md:py-4 rounded-2xl shadow-sm border border-slate-700">
-        <div className="flex flex-wrap items-center gap-2">
-          {/* Badge de Disciplina */}
-          <span className={`text-xs md:text-sm font-bold px-3 py-1 rounded-lg border shadow-sm ${discMeta.badgeClass}`}>
+      <div className="flex justify-between items-center bg-slate-800 px-3.5 sm:px-5 py-2.5 sm:py-3.5 rounded-2xl shadow-sm border border-slate-700">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className={`text-[11px] sm:text-xs font-bold px-2.5 py-0.5 rounded-lg border shadow-sm ${discMeta.badgeClass}`}>
             {discMeta.nombre}
           </span>
-          {/* Badge de Dificultad */}
-          <span className={`text-[11px] md:text-xs font-bold px-2.5 py-1 rounded-lg border ${diffMeta.badgeClass}`}>
-            Nivel: {diffMeta.nombre}
+          <span className={`text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-lg border ${diffMeta.badgeClass}`}>
+            {diffMeta.nombre}
           </span>
         </div>
 
-        <div className="font-bold text-slate-400 text-xs md:text-sm shrink-0 pl-2">
+        <div className="font-bold text-slate-400 text-xs shrink-0 pl-2">
           Reactivo <span className="text-white font-black">{currentIdx + 1}</span> de <span className="text-slate-300">{preguntas.length}</span>
         </div>
       </div>
 
-      {/* Tarjeta de la Pregunta y Opciones */}
-      <div className="bg-slate-800 p-5 md:p-8 rounded-3xl shadow-sm border border-slate-700 mb-4 md:mb-6">
-        <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+      {/* Tarjeta de Pregunta y Opciones */}
+      <div className="bg-slate-800 p-4 sm:p-6 md:p-8 rounded-3xl shadow-sm border border-slate-700">
+        <div className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 mb-1.5">
           {p.id}
         </div>
-        <h2 className="text-lg md:text-xl font-bold text-white mb-6 leading-relaxed">
+        <h2 className="text-base sm:text-lg md:text-xl font-bold text-white mb-4 sm:mb-6 leading-relaxed">
           {p.pregunta}
         </h2>
 
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {Object.entries(p.opciones).map(([key, val]) => {
-            let btnClass = "w-full text-left p-3.5 md:p-4 rounded-2xl border-2 transition-all flex items-center gap-3 md:gap-4 group ";
+            let btnClass = "w-full text-left p-3 sm:p-3.5 md:p-4 rounded-2xl border-2 transition-all flex items-center gap-2.5 sm:gap-3.5 active:scale-[0.99] ";
             let icon = null;
 
             if (!isAnswered) {
-              btnClass += "border-slate-700 bg-slate-750 hover:border-uroblue-500 hover:bg-slate-700 cursor-pointer text-slate-200 active:scale-[0.99]";
+              btnClass += "border-slate-700 bg-slate-750 hover:border-uroblue-500 hover:bg-slate-700 cursor-pointer text-slate-200";
             } else {
               btnClass += "cursor-default ";
               if (key === p.respuesta_correcta) {
@@ -359,9 +354,9 @@ export default function Simulator({ setView, user, config, setAnkiConfig }) {
                 disabled={isAnswered} 
                 className={btnClass}
               >
-                <span className={`w-7 h-7 md:w-8 md:h-8 rounded-xl flex items-center justify-center font-black shrink-0 text-xs md:text-sm ${
+                <span className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center font-black shrink-0 text-xs sm:text-sm ${
                   !isAnswered 
-                    ? 'bg-slate-800 border border-slate-600 group-hover:border-uroblue-400 group-hover:text-uroblue-400 text-slate-300' 
+                    ? 'bg-slate-800 border border-slate-600 text-slate-300' 
                     : key === p.respuesta_correcta 
                       ? 'bg-emerald-600 text-white border-transparent' 
                       : key === selectedAns 
@@ -370,7 +365,7 @@ export default function Simulator({ setView, user, config, setAnkiConfig }) {
                 }`}>
                   {key}
                 </span>
-                <span className="font-medium text-sm md:text-base leading-snug">
+                <span className="font-medium text-xs sm:text-sm md:text-base leading-snug">
                   {val}
                 </span>
                 {icon}
@@ -380,45 +375,45 @@ export default function Simulator({ setView, user, config, setAnkiConfig }) {
         </div>
       </div>
 
-      {/* Retroalimentación y Perla Médica */}
+      {/* Justificación y Perla Médica */}
       {isAnswered && (
-        <div className={`p-5 md:p-6 rounded-3xl mb-6 shadow-md border flex gap-3 md:gap-4 fade-in-up ${
+        <div className={`p-4 sm:p-5 md:p-6 rounded-3xl shadow-md border flex gap-3 fade-in-up ${
           isCorrect 
             ? 'bg-emerald-950/30 border-emerald-800/60' 
             : 'bg-red-950/30 border-red-800/60'
         }`}>
           <div className="shrink-0 mt-0.5">
             {isCorrect ? (
-              <div className="w-9 h-9 md:w-10 md:h-10 bg-emerald-500/20 border border-emerald-500/40 rounded-xl flex items-center justify-center">
-                <Check className="text-emerald-400 w-5 h-5 md:w-6 md:h-6" />
+              <div className="w-8 h-8 sm:w-9 sm:h-9 bg-emerald-500/20 border border-emerald-500/40 rounded-xl flex items-center justify-center">
+                <Check className="text-emerald-400 w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             ) : (
-              <div className="w-9 h-9 md:w-10 md:h-10 bg-red-500/20 border border-red-500/40 rounded-xl flex items-center justify-center">
-                <X className="text-red-400 w-5 h-5 md:w-6 md:h-6" />
+              <div className="w-8 h-8 sm:w-9 sm:h-9 bg-red-500/20 border border-red-500/40 rounded-xl flex items-center justify-center">
+                <X className="text-red-400 w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             )}
           </div>
           <div>
-            <h4 className={`font-black text-base md:text-lg mb-1.5 ${isCorrect ? 'text-emerald-400' : 'text-red-400'}`}>
+            <h4 className={`font-black text-sm sm:text-base mb-1 ${isCorrect ? 'text-emerald-400' : 'text-red-400'}`}>
               {isCorrect ? '¡Respuesta Correcta!' : `Incorrecto. Opción correcta: ${p.respuesta_correcta}`}
             </h4>
-            <p className="font-normal text-sm md:text-base text-slate-200 leading-relaxed">
-              <span className="font-bold text-slate-300 block mb-1">Justificación CONAMEU:</span>
+            <p className="font-normal text-xs sm:text-sm md:text-base text-slate-200 leading-relaxed">
+              <span className="font-bold text-slate-300 block mb-0.5">Justificación:</span>
               {p.justificacion}
             </p>
           </div>
         </div>
       )}
 
-      {/* Botones de Navegación del Simulador */}
-      <div className="flex justify-between items-center fade-in pb-10 md:pb-0">
+      {/* Barra de Acciones del Simulador */}
+      <div className="flex justify-between items-center pt-1">
         <button
           onClick={() => {
-            if (window.confirm("¿Seguro que deseas salir del simulador? Se guardará el progreso hasta esta pregunta.")) {
+            if (window.confirm("¿Seguro que deseas salir del simulador? Se guardará tu avance actual.")) {
               setView('dashboard');
             }
           }}
-          className="text-xs md:text-sm text-slate-400 hover:text-slate-200 font-bold px-3 py-2"
+          className="text-xs text-slate-400 hover:text-slate-200 font-bold px-3 py-2.5 active:scale-95"
         >
           Abandonar Examen
         </button>
@@ -426,9 +421,9 @@ export default function Simulator({ setView, user, config, setAnkiConfig }) {
         {isAnswered && (
           <button 
             onClick={nextQuestion} 
-            className="w-full md:w-auto flex items-center justify-center gap-2 bg-gradient-to-r from-uroblue-600 to-indigo-600 hover:from-uroblue-500 hover:to-indigo-500 text-white font-bold py-3.5 px-8 rounded-xl shadow-lg transition-all"
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-uroblue-600 to-indigo-600 hover:from-uroblue-500 hover:to-indigo-500 text-white font-bold py-3 px-6 sm:px-8 rounded-xl shadow-lg transition-all active:scale-95 text-xs sm:text-sm"
           >
-            {currentIdx + 1 === preguntas.length ? 'Finalizar Examen' : 'Siguiente Reactivo'} <ArrowRight className="w-5 h-5" />
+            {currentIdx + 1 === preguntas.length ? 'Finalizar Examen' : 'Siguiente Reactivo'} <ArrowRight className="w-4 h-4" />
           </button>
         )}
       </div>
