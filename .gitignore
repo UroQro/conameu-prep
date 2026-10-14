@@ -1,3 +1,4 @@
 node_modules/
+dist/
 llave.json
 .DS_Store

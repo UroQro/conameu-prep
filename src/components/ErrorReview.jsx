@@ -1,78 +1,422 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
-import { ArrowLeft, RotateCcw } from 'lucide-react';
+import { 
+  ArrowLeft, RotateCcw, Brain, Sparkles, Filter, CheckCircle2, 
+  HelpCircle, ChevronRight, Check, AlertCircle, RefreshCw
+} from 'lucide-react';
+import { DISCIPLINAS, LISTA_DISCIPLINAS, DIFICULTADES } from '../utils/disciplinas';
+import { BANCO_PREGUNTAS, analizarHistorial } from '../utils/bancoService';
+import { getLocalAnkiState, saveLocalAnkiState, rateCard } from '../utils/ankiEngine';
 
-export default function ErrorReview({ setView, user }) {
+export default function ErrorReview({ setView, user, ankiConfig }) {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
+  
+  // Modos de Mazo Anki: 'errors', 'weakness', 'discipline', 'all'
+  const [deckMode, setDeckMode] = useState(ankiConfig?.mode || 'errors');
+  const [selectedDiscipline, setSelectedDiscipline] = useState(ankiConfig?.disciplina || 'todas');
+  
+  // Estado de repetición espaciada Anki local
+  const [ankiState, setAnkiState] = useState({});
+  const [sessionStats, setSessionStats] = useState({ again: 0, hard: 0, good: 0, easy: 0 });
+  const [weakDisciplines, setWeakDisciplines] = useState([]);
 
   useEffect(() => {
-    const fetchErrors = async () => {
+    const loadDeck = async () => {
+      setLoading(true);
       try {
+        const localState = getLocalAnkiState(user?.uid || 'guest');
+        setAnkiState(localState);
+
         const querySnapshot = await getDocs(collection(db, "users", user.uid, "exams"));
-        let allErrors = [];
-        querySnapshot.forEach((doc) => {
-          const examData = doc.data();
-          if (examData.errores) allErrors = [...allErrors, ...examData.errores];
-        });
-        const uniqueErrors = Array.from(new Map(allErrors.map(item => [item.id, item])).values());
-        setCards(uniqueErrors);
+        let allExams = [];
+        querySnapshot.forEach(doc => allExams.push(doc.data()));
+
+        const analysis = analizarHistorial(allExams, BANCO_PREGUNTAS);
+        setWeakDisciplines(analysis.weakDisciplines);
+
+        // Si se pasaron tarjetas específicas personalizadas (ej. desde el final de un simulador)
+        if (ankiConfig?.customCards && ankiConfig.customCards.length > 0) {
+          setCards(ankiConfig.customCards);
+          setLoading(false);
+          return;
+        }
+
+        // Construir la baraja según el modo
+        let deck = [];
+        const bancoMap = new Map();
+        BANCO_PREGUNTAS.forEach(q => bancoMap.set(q.id, q));
+
+        if (deckMode === 'errors') {
+          // Errores acumulados en exámenes
+          let rawErrors = [];
+          allExams.forEach(exam => {
+            if (exam.errores) rawErrors = [...rawErrors, ...exam.errores];
+          });
+          const uniqueMap = new Map();
+          rawErrors.forEach(err => {
+            const enriched = bancoMap.get(err.id) || err;
+            if (enriched.id && !uniqueMap.has(enriched.id)) {
+              uniqueMap.set(enriched.id, enriched);
+            }
+          });
+          deck = Array.from(uniqueMap.values());
+        } else if (deckMode === 'weakness') {
+          // Filtrar preguntas del banco de las subdisciplinas con menor puntaje
+          const targetDiscs = analysis.weakDisciplines.length > 0 
+            ? analysis.weakDisciplines 
+            : ['uropedia', 'urogine', 'uro_funcional'];
+          deck = BANCO_PREGUNTAS.filter(q => targetDiscs.includes(q.disciplina));
+        } else if (deckMode === 'discipline') {
+          if (selectedDiscipline !== 'todas') {
+            deck = BANCO_PREGUNTAS.filter(q => q.disciplina === selectedDiscipline);
+          } else {
+            deck = BANCO_PREGUNTAS;
+          }
+        } else {
+          // Todo el banco
+          deck = BANCO_PREGUNTAS;
+        }
+
+        // Aleatorizar la baraja
+        const shuffledDeck = deck.sort(() => 0.5 - Math.random());
+        setCards(shuffledDeck);
+        setCurrentIdx(0);
+        setIsFlipped(false);
         setLoading(false);
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error al cargar mazo Anki:", error);
+        setCards(BANCO_PREGUNTAS.slice(0, 30));
         setLoading(false);
       }
     };
-    fetchErrors();
-  }, [user]);
 
-  const nextCard = (e) => {
-    e.stopPropagation();
+    loadDeck();
+  }, [user, deckMode, selectedDiscipline, ankiConfig]);
+
+  const handleRate = (rating) => {
+    const currentCard = cards[currentIdx];
+    if (!currentCard) return;
+
+    // Actualizar estado Anki
+    const updated = rateCard(currentCard.id, rating, ankiState);
+    const newState = { ...ankiState, [currentCard.id]: updated };
+    setAnkiState(newState);
+    saveLocalAnkiState(newState, user?.uid || 'guest');
+
+    // Registrar en estadísticas de la sesión
+    setSessionStats(prev => ({ ...prev, [rating]: prev[rating] + 1 }));
+
+    // Si calificó 'again', poner la tarjeta de nuevo al final de la sesión para reestudio
+    if (rating === 'again') {
+      setCards(prev => [...prev, currentCard]);
+    }
+
+    // Avanzar a la siguiente tarjeta con animación
     setIsFlipped(false);
     setTimeout(() => {
-      if (currentIdx < cards.length - 1) setCurrentIdx(i => i + 1);
-      else setCurrentIdx(0);
+      if (currentIdx + 1 < cards.length) {
+        setCurrentIdx(i => i + 1);
+      } else {
+        // Fin de la baraja
+        setCurrentIdx(cards.length);
+      }
     }, 150);
   };
 
-  if (loading) return <div className="flex justify-center p-20"><div className="animate-spin h-10 w-10 border-b-2 border-uroblue-500 rounded-full"></div></div>;
-  if (cards.length === 0) return <div className="text-center p-10 md:p-20 bg-slate-800 rounded-3xl border border-slate-700 mt-6"><h2 className="text-xl md:text-2xl font-bold text-emerald-400 mb-4">¡Felicidades!</h2><p className="text-slate-400 font-medium text-sm md:text-base">No tienes errores registrados. Sigue haciendo simuladores.</p><button onClick={() => setView('dashboard')} className="mt-8 text-uroblue-400 font-bold hover:underline">Volver al menú</button></div>;
+  const restartDeck = () => {
+    const shuffled = [...cards].sort(() => 0.5 - Math.random());
+    setCards(shuffled);
+    setCurrentIdx(0);
+    setIsFlipped(false);
+    setSessionStats({ again: 0, hard: 0, good: 0, easy: 0 });
+  };
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center p-20 space-y-4">
+        <div className="animate-spin h-12 w-12 border-4 border-amber-500 border-t-transparent rounded-full"></div>
+        <p className="text-slate-400 font-bold text-sm">Generando baraja Anki de repetición espaciada...</p>
+      </div>
+    );
+  }
+
+  // Baraja vacía
+  if (cards.length === 0) {
+    return (
+      <div className="max-w-xl mx-auto text-center p-10 md:p-14 bg-slate-800 rounded-3xl border border-slate-700 shadow-xl mt-6 fade-in">
+        <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-4">
+          <CheckCircle2 className="w-8 h-8" />
+        </div>
+        <h2 className="text-xl md:text-2xl font-black text-white mb-2">¡Mazo al día!</h2>
+        <p className="text-slate-400 text-sm leading-relaxed mb-6">
+          {deckMode === 'errors' 
+            ? 'No tienes errores pendientes por repasar en este momento. ¡Excelente trabajo!' 
+            : 'No hay tarjetas disponibles con los filtros seleccionados.'}
+        </p>
+        <div className="flex flex-wrap justify-center gap-3">
+          <button 
+            onClick={() => { setDeckMode('discipline'); setSelectedDiscipline('todas'); }}
+            className="px-5 py-2.5 bg-amber-500 text-slate-950 font-bold rounded-xl text-xs md:text-sm hover:bg-amber-400 transition-colors"
+          >
+            Estudiar Todo el Banco en Anki
+          </button>
+          <button 
+            onClick={() => setView('dashboard')} 
+            className="px-5 py-2.5 bg-slate-700 text-white font-bold rounded-xl text-xs md:text-sm hover:bg-slate-600 transition-colors"
+          >
+            Volver al Menú
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Fin de la sesión de Anki
+  if (currentIdx >= cards.length) {
+    return (
+      <div className="max-w-xl mx-auto bg-slate-800 p-8 md:p-12 rounded-3xl border border-slate-700 shadow-2xl text-center mt-6 fade-in">
+        <div className="w-16 h-16 rounded-2xl bg-uroblue-600/20 text-uroblue-400 flex items-center justify-center mx-auto mb-4 border border-uroblue-500/30">
+          <Sparkles className="w-8 h-8" />
+        </div>
+        <h2 className="text-2xl font-black text-white mb-2">Sesión Anki Completada</h2>
+        <p className="text-slate-400 text-sm mb-6">Has revisado todas las tarjetas programadas en esta baraja.</p>
+
+        {/* Resumen de la sesión */}
+        <div className="grid grid-cols-4 gap-2 mb-8">
+          <div className="p-3 rounded-xl bg-red-950/40 border border-red-800/40">
+            <p className="text-xs text-red-400 font-bold">Otra vez</p>
+            <p className="text-xl font-black text-white">{sessionStats.again}</p>
+          </div>
+          <div className="p-3 rounded-xl bg-amber-950/40 border border-amber-800/40">
+            <p className="text-xs text-amber-400 font-bold">Difícil</p>
+            <p className="text-xl font-black text-white">{sessionStats.hard}</p>
+          </div>
+          <div className="p-3 rounded-xl bg-blue-950/40 border border-blue-800/40">
+            <p className="text-xs text-blue-400 font-bold">Bien</p>
+            <p className="text-xl font-black text-white">{sessionStats.good}</p>
+          </div>
+          <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-800/40">
+            <p className="text-xs text-emerald-400 font-bold">Fácil</p>
+            <p className="text-xl font-black text-white">{sessionStats.easy}</p>
+          </div>
+        </div>
+
+        <div className="flex justify-center gap-3">
+          <button 
+            onClick={restartDeck}
+            className="flex items-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl text-sm transition-colors"
+          >
+            <RotateCcw className="w-4 h-4" /> Repetir Baraja
+          </button>
+          <button 
+            onClick={() => setView('dashboard')}
+            className="flex items-center gap-2 px-6 py-3 bg-uroblue-600 hover:bg-uroblue-500 text-white font-bold rounded-xl text-sm transition-colors shadow"
+          >
+            Ir al Menú
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const currentCard = cards[currentIdx];
+  const discMeta = DISCIPLINAS[currentCard.disciplina] || {
+    nombre: currentCard.disciplinaNombre || "Urología General",
+    badgeClass: "bg-amber-900/40 text-amber-300 border-amber-800/40"
+  };
+  const diffMeta = DIFICULTADES[currentCard.dificultad] || {
+    nombre: currentCard.dificultadNombre || "Intermedia",
+    badgeClass: "bg-slate-700 text-slate-300 border-slate-600"
+  };
+
+  const progressPct = Math.round(((currentIdx + 1) / cards.length) * 100);
 
   return (
-    <div className="max-w-2xl mx-auto fade-in">
-      <div className="flex justify-between items-center mb-6">
-        <button onClick={() => setView('dashboard')} className="flex items-center text-slate-400 hover:text-white font-bold text-sm md:text-base"><ArrowLeft className="w-4 h-4 mr-1 md:mr-2"/> Volver</button>
-        <span className="text-slate-500 font-bold text-sm md:text-base">Tarjeta {currentIdx + 1} de {cards.length}</span>
+    <div className="max-w-2xl mx-auto fade-in pb-10 space-y-4 md:space-y-6">
+      {/* Selector de Mazos y Filtros */}
+      <div className="bg-slate-800 p-4 rounded-2xl border border-slate-700 flex flex-wrap items-center justify-between gap-3">
+        <button 
+          onClick={() => setView('dashboard')} 
+          className="flex items-center text-slate-400 hover:text-white font-bold text-xs md:text-sm"
+        >
+          <ArrowLeft className="w-4 h-4 mr-1"/> Volver al Menú
+        </button>
+
+        {/* Selector de Mazos Anki */}
+        <div className="flex items-center gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-700 text-xs font-bold">
+          <button
+            onClick={() => setDeckMode('errors')}
+            className={`px-3 py-1.5 rounded-lg transition-colors ${deckMode === 'errors' ? 'bg-amber-500 text-slate-950 shadow' : 'text-slate-400 hover:text-white'}`}
+          >
+            Errores
+          </button>
+          <button
+            onClick={() => setDeckMode('weakness')}
+            className={`px-3 py-1.5 rounded-lg transition-colors ${deckMode === 'weakness' ? 'bg-amber-500 text-slate-950 shadow' : 'text-slate-400 hover:text-white'}`}
+          >
+            Debilidades
+          </button>
+          <button
+            onClick={() => setDeckMode('discipline')}
+            className={`px-3 py-1.5 rounded-lg transition-colors ${deckMode === 'discipline' ? 'bg-amber-500 text-slate-950 shadow' : 'text-slate-400 hover:text-white'}`}
+          >
+            Por Disciplina
+          </button>
+        </div>
+
+        <span className="text-slate-400 text-xs font-bold shrink-0">
+          Tarjeta {currentIdx + 1} de {cards.length}
+        </span>
       </div>
 
-      <div className="relative w-full h-[500px] md:h-[450px] perspective-1000">
+      {/* Selector secundario de disciplina si el modo es 'discipline' */}
+      {deckMode === 'discipline' && (
+        <div className="bg-slate-800/80 p-3 rounded-2xl border border-slate-700/80 flex items-center gap-2 overflow-x-auto custom-scrollbar">
+          <button
+            onClick={() => setSelectedDiscipline('todas')}
+            className={`px-3 py-1 rounded-lg text-xs font-bold shrink-0 transition-colors ${selectedDiscipline === 'todas' ? 'bg-uroblue-600 text-white' : 'bg-slate-900 text-slate-300'}`}
+          >
+            Todas
+          </button>
+          {LISTA_DISCIPLINAS.map(d => (
+            <button
+              key={d.id}
+              onClick={() => setSelectedDiscipline(d.id)}
+              className={`px-3 py-1 rounded-lg text-xs font-bold shrink-0 transition-colors ${selectedDiscipline === d.id ? 'bg-uroblue-600 text-white' : 'bg-slate-900 text-slate-300'}`}
+            >
+              {d.shortName}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Barra de progreso de la sesión */}
+      <div className="w-full bg-slate-900 rounded-full h-2 border border-slate-700">
+        <div 
+          className="bg-amber-500 h-full rounded-full transition-all duration-300"
+          style={{ width: `${progressPct}%` }}
+        ></div>
+      </div>
+
+      {/* Contenedor 3D Flip de la Flashcard */}
+      <div className="relative w-full h-[520px] md:h-[480px] perspective-1000">
         <div className={`w-full h-full absolute transition-transform duration-500 transform-style-preserve-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
           
-          <div className="absolute w-full h-full bg-slate-800 rounded-3xl shadow-lg border border-slate-700 p-6 md:p-10 flex flex-col justify-center items-center text-center backface-hidden cursor-pointer hover:border-uroblue-500/50 transition-colors" onClick={() => setIsFlipped(true)}>
-            <span className="bg-amber-900/30 text-amber-400 text-xs font-bold px-3 py-1.5 rounded-lg mb-6 absolute top-6 md:top-8 border border-amber-800/30">{currentCard.categoria}</span>
-            <RotateCcw className="w-10 h-10 md:w-12 md:h-12 text-slate-600 mb-6" />
-            <h2 className="text-lg md:text-2xl font-bold text-white leading-snug">{currentCard.pregunta}</h2>
-            <p className="absolute bottom-6 md:bottom-8 text-slate-500 font-bold text-xs md:text-sm animate-pulse">Toca para revelar</p>
+          {/* FRENTE DE LA TARJETA (Pregunta + Disciplina + Dificultad) */}
+          <div 
+            className="absolute w-full h-full bg-slate-800 rounded-3xl shadow-xl border-2 border-slate-700 p-6 md:p-8 flex flex-col justify-between items-center text-center backface-hidden cursor-pointer hover:border-amber-500/50 transition-colors"
+            onClick={() => setIsFlipped(true)}
+          >
+            {/* Cabecera del frente */}
+            <div className="w-full flex justify-between items-center">
+              <span className={`text-xs font-bold px-3 py-1 rounded-lg border ${discMeta.badgeClass}`}>
+                {discMeta.nombre}
+              </span>
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${diffMeta.badgeClass}`}>
+                {diffMeta.nombre}
+              </span>
+            </div>
+
+            {/* Cuerpo de la pregunta */}
+            <div className="my-auto px-2">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">{currentCard.id}</span>
+              <h2 className="text-lg md:text-xl font-bold text-white leading-relaxed">
+                {currentCard.pregunta}
+              </h2>
+            </div>
+
+            {/* Pie del frente */}
+            <div className="w-full pt-4 border-t border-slate-700/60 flex items-center justify-center gap-2 text-slate-400 font-bold text-xs animate-pulse">
+              <HelpCircle className="w-4 h-4 text-amber-400" />
+              <span>Toca en cualquier parte de la tarjeta para voltear y revelar la respuesta</span>
+            </div>
           </div>
 
-          <div className="absolute w-full h-full bg-slate-700 rounded-3xl shadow-xl p-6 md:p-10 flex flex-col justify-between backface-hidden rotate-y-180 text-white cursor-pointer" onClick={() => setIsFlipped(false)}>
-            <div className="overflow-y-auto pr-2 custom-scrollbar">
-              <h3 className="text-emerald-400 font-black text-lg md:text-xl mb-4 text-left">R: {currentCard.opciones[currentCard.respuesta_correcta]}</h3>
-              <div className="bg-slate-800 p-4 md:p-5 rounded-xl border border-slate-600 text-left">
-                <p className="text-xs md:text-sm leading-relaxed text-slate-300"><span className="font-bold text-white block mb-1">Justificación:</span> {currentCard.justificacion}</p>
+          {/* REVERSO DE LA TARJETA (Respuesta Correcta + Justificación + Botones Anki) */}
+          <div 
+            className="absolute w-full h-full bg-slate-850 rounded-3xl shadow-2xl border-2 border-amber-500/40 p-6 md:p-8 flex flex-col justify-between backface-hidden rotate-y-180 text-white"
+          >
+            {/* Cabecera del reverso */}
+            <div className="w-full flex justify-between items-center mb-2">
+              <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4" /> Respuesta Correcta CONAMEU
+              </span>
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${discMeta.badgeClass}`}>
+                {discMeta.shortName}
+              </span>
+            </div>
+
+            {/* Contenido desplazable */}
+            <div className="overflow-y-auto pr-2 custom-scrollbar my-auto space-y-3">
+              <div className="p-3.5 bg-emerald-950/40 border border-emerald-800/60 rounded-2xl text-left">
+                <p className="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1">
+                  Opción {currentCard.respuesta_correcta}:
+                </p>
+                <p className="text-base md:text-lg font-black text-white">
+                  {currentCard.opciones ? currentCard.opciones[currentCard.respuesta_correcta] : 'Opción Correcta'}
+                </p>
+              </div>
+
+              <div className="bg-slate-900/80 p-4 rounded-2xl border border-slate-700 text-left">
+                <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Justificación y Perla Clínica:
+                </h4>
+                <p className="text-xs md:text-sm text-slate-200 leading-relaxed font-normal">
+                  {currentCard.justificacion}
+                </p>
               </div>
             </div>
-            
-            <div className="grid grid-cols-2 gap-3 md:gap-4 mt-4 shrink-0">
-              <button onClick={nextCard} className="bg-red-500/20 text-red-300 hover:bg-red-500 hover:text-white py-3 md:py-4 rounded-xl font-bold text-sm md:text-base transition-colors">Aún dudo</button>
-              <button onClick={nextCard} className="bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500 hover:text-white py-3 md:py-4 rounded-xl font-bold text-sm md:text-base transition-colors">La domino</button>
+
+            {/* Barra de Calificación Estilo Anki (4 botones de repetición espaciada) */}
+            <div className="pt-3 border-t border-slate-700/80 shrink-0">
+              <p className="text-[11px] font-bold text-center text-slate-400 mb-2">
+                ¿Qué tan bien dominas este concepto urológico?
+              </p>
+              <div className="grid grid-cols-4 gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleRate('again')}
+                  className="flex flex-col items-center justify-center py-2.5 px-1 bg-red-950/50 hover:bg-red-900 border border-red-800/60 text-red-300 hover:text-white rounded-xl transition-colors"
+                >
+                  <span className="font-black text-xs md:text-sm">Otra vez</span>
+                  <span className="text-[10px] text-red-400/80">&lt; 1 min</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleRate('hard')}
+                  className="flex flex-col items-center justify-center py-2.5 px-1 bg-amber-950/50 hover:bg-amber-900 border border-amber-800/60 text-amber-300 hover:text-white rounded-xl transition-colors"
+                >
+                  <span className="font-black text-xs md:text-sm">Difícil</span>
+                  <span className="text-[10px] text-amber-400/80">1 día</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleRate('good')}
+                  className="flex flex-col items-center justify-center py-2.5 px-1 bg-blue-950/50 hover:bg-blue-900 border border-blue-800/60 text-blue-300 hover:text-white rounded-xl transition-colors"
+                >
+                  <span className="font-black text-xs md:text-sm">Bien</span>
+                  <span className="text-[10px] text-blue-400/80">3 días</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleRate('easy')}
+                  className="flex flex-col items-center justify-center py-2.5 px-1 bg-emerald-950/50 hover:bg-emerald-900 border border-emerald-800/60 text-emerald-300 hover:text-white rounded-xl transition-colors"
+                >
+                  <span className="font-black text-xs md:text-sm">Fácil</span>
+                  <span className="text-[10px] text-emerald-400/80">7 días</span>
+                </button>
+              </div>
             </div>
+
           </div>
+
         </div>
       </div>
     </div>

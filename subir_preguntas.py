@@ -1,6 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
-import re
+import json
+import os
 
 # 1. Conectar a Firebase
 cred = credentials.Certificate("llave.json")
@@ -8,60 +9,35 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 def procesar_y_subir():
-    print("Leyendo borrador_2.txt...")
+    json_path = os.path.join("src", "data", "preguntas.json")
+    print(f"Leyendo preguntas clasificadas desde {json_path}...")
     try:
-        with open("borrador_2.txt", "r", encoding="utf-8") as f:
-            texto = f.read()
+        with open(json_path, "r", encoding="utf-8") as f:
+            preguntas = json.load(f)
     except FileNotFoundError:
-        print("Error: No se encontró el archivo borrador_2.txt en la carpeta actual.")
+        print(f"Error: No se encontró el archivo {json_path}.")
         return
 
-    # 2. Expresión regular ajustada al nuevo formato numerado
-    patron = re.compile(
-        r"(?:^|\n)(\d+)\.\s+(.*?)\n"
-        r"\s*a\.\s+(.*?)\n"
-        r"\s*b\.\s+(.*?)\n"
-        r"\s*c\.\s+(.*?)\n"
-        r"\s*d\.\s+(.*?)\n"
-        r"\s*Respuesta:\s*([a-dA-D])\n"
-        r"\s*Justificaci[oó]n:\s*(.*?)(?=\n\s*\n|\n\d+\.\s+|\Z)", 
-        re.IGNORECASE | re.DOTALL
-    )
-
-    matches = list(patron.finditer(texto))
-    
-    if not matches:
-        print("No se encontraron preguntas con el formato esperado. Revisa el texto.")
-        return
-        
-    print(f"¡Se detectaron {len(matches)} preguntas! Subiendo a Firestore...")
+    print(f"¡Se detectaron {len(preguntas)} preguntas con disciplina y dificultad! Subiendo a Firestore...")
     
     batch = db.batch()
     contador = 0
 
-    for match in matches:
-        num = match.group(1)
-        pregunta = match.group(2).strip().replace('\n', ' ')
-        opA = match.group(3).strip().replace('\n', ' ')
-        opB = match.group(4).strip().replace('\n', ' ')
-        opC = match.group(5).strip().replace('\n', ' ')
-        opD = match.group(6).strip().replace('\n', ' ')
-        respuesta = match.group(7).strip().upper()
-        justificacion = match.group(8).strip().replace('\n', ' ')
-        
-        # 3. Estructurar el documento para la base de datos
+    for item in preguntas:
         doc_data = {
-            "id": f"URO-{int(num):03d}",
-            "categoria": "Simulador CONAMEU",
-            "pregunta": pregunta,
-            "opciones": {
-                "A": opA,
-                "B": opB,
-                "C": opC,
-                "D": opD
-            },
-            "respuesta_correcta": respuesta,
-            "justificacion": justificacion
+            "id": item["id"],
+            "num": item.get("num", 0),
+            "disciplina": item["disciplina"],
+            "disciplinaNombre": item["disciplinaNombre"],
+            "disciplinaIcono": item.get("disciplinaIcono", "Sparkles"),
+            "disciplinaColor": item.get("disciplinaColor", "blue"),
+            "dificultad": item["dificultad"],
+            "dificultadNombre": item["dificultadNombre"],
+            "categoria": item["disciplinaNombre"],
+            "pregunta": item["pregunta"],
+            "opciones": item["opciones"],
+            "respuesta_correcta": item["respuesta_correcta"],
+            "justificacion": item["justificacion"]
         }
         
         doc_ref = db.collection("preguntas").document(doc_data["id"])
@@ -75,7 +51,7 @@ def procesar_y_subir():
             print(f"Progreso: {contador} preguntas inyectadas...")
 
     batch.commit()
-    print(f"¡Éxito total! {contador} preguntas inyectadas a la base de datos.")
+    print(f"¡Éxito total! {contador} preguntas clasificadas inyectadas a Firestore.")
 
 if __name__ == '__main__':
     procesar_y_subir()

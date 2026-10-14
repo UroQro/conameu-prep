@@ -10,7 +10,7 @@ export default defineConfig({
       manifest: {
         name: 'CONAMEU Prep',
         short_name: 'CONAMEU',
-        description: 'Simulador Urológico',
+        description: 'Simulador Urológico y Flashcards Anki para Examen de Consejo',
         theme_color: '#0f172a',
         background_color: '#0f172a',
         display: 'standalone',
@@ -28,5 +28,16 @@ export default defineConfig({
         ]
       }
     })
-  ] 
+  ],
+  build: {
+    chunkSizeWarningLimit: 1200,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-firebase': ['firebase/app', 'firebase/auth', 'firebase/firestore'],
+          'vendor-lucide': ['lucide-react']
+        }
+      }
+    }
+  }
 });
