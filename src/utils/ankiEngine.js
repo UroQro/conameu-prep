@@ -1,10 +1,11 @@
-// Anki Spaced Repetition Engine for CONAMEU Prep
+// Anki Spaced Repetition Engine for UroBoard Prep
 
-const STORAGE_KEY = 'conameu_anki_progress';
+const STORAGE_KEY = 'uroboard_anki_progress';
+const LEGACY_STORAGE_KEY = 'conameu_anki_progress';
 
 export function getLocalAnkiState(uid = 'guest') {
   try {
-    const raw = localStorage.getItem(`${STORAGE_KEY}_${uid}`);
+    const raw = localStorage.getItem(`${STORAGE_KEY}_${uid}`) || localStorage.getItem(`${LEGACY_STORAGE_KEY}_${uid}`);
     return raw ? JSON.parse(raw) : {};
   } catch (e) {
     console.error("Error reading anki state:", e);

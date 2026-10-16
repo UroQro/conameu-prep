@@ -1,4 +1,4 @@
-// Batch 2: 110 Preguntas de Alta Dificultad para el Examen de Consejo CONAMEU
+// Batch 2: 110 Preguntas de Alta Dificultad para el Examen de Consejo de Urología - UroBoard Prep
 // Diseñadas con opciones múltiples homogéneas en longitud, plausibilidad clínica y rigor técnico.
 // Cada distractor representa una alternativa diagnóstica o terapéutica verosímil según guías AUA/EAU/NCCN.
 

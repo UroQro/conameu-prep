@@ -13,8 +13,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.png', 'apple-touch-icon.png'],
       manifest: {
-        name: 'CONAMEU Prep - Simulador Urológico',
-        short_name: 'CONAMEU',
+        name: 'UroBoard Prep - Simulador Urológico',
+        short_name: 'UroBoard',
         description: 'Simulador Urológico y Flashcards Anki para Examen de Consejo',
         theme_color: '#0f172a',
         background_color: '#0f172a',

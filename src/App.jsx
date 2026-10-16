@@ -25,7 +25,7 @@ export default function App() {
   if (loading) return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-900 gap-3">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-uroblue-500"></div>
-      <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">Cargando CONAMEU Prep...</p>
+      <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">Cargando UroBoard Prep...</p>
     </div>
   );
 
@@ -40,10 +40,10 @@ export default function App() {
           onClick={() => setCurrentView('dashboard')}
         >
           <div className="w-8 h-8 md:w-9 md:h-9 bg-gradient-to-tr from-uroblue-600 to-indigo-600 rounded-xl flex items-center justify-center text-white font-black text-sm md:text-base shadow-md">
-            C
+            U
           </div>
           <div>
-            <h1 className="text-base md:text-lg font-black text-white tracking-tight leading-none">CONAMEU Prep</h1>
+            <h1 className="text-base md:text-lg font-black text-white tracking-tight leading-none">UroBoard Prep</h1>
             <span className="text-[10px] text-slate-400 font-bold tracking-wider">Simulador Urológico</span>
           </div>
         </div>
@@ -206,7 +206,7 @@ export default function App() {
 
       {/* Footer solo para desktop */}
       <footer className="hidden md:block text-center text-slate-500 text-xs py-6 border-t border-slate-800 mt-auto">
-        CONAMEU Prep • Banco Urológico por Subdisciplinas & Repetición Espaciada Anki • 2026
+        UroBoard Prep • Banco Urológico por Subdisciplinas & Repetición Espaciada Anki • 2026
       </footer>
     </div>
   );

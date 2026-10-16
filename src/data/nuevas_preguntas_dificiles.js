@@ -1,4 +1,4 @@
-// 110 Preguntas de Alta Dificultad para el Examen de Consejo de Urología CONAMEU
+// 110 Preguntas de Alta Dificultad para el Examen de Consejo de Urología - UroBoard Prep
 // 10 preguntas por cada una de las 11 áreas de estudio basadas en Guías AUA, EAU y NCCN
 
 export const NUEVAS_PREGUNTAS_DIFICILES = [

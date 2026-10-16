@@ -81,7 +81,7 @@ export default function Dashboard({ setView, setSimConfig, setAnkiConfig, user }
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
           <div>
             <div className="inline-flex items-center gap-1.5 bg-uroblue-900/40 text-uroblue-400 text-[11px] font-bold px-3 py-1 rounded-full border border-uroblue-700/50 mb-2">
-              <Sparkles className="w-3.5 h-3.5" /> Preparación CONAMEU
+              <Sparkles className="w-3.5 h-3.5" /> Preparación para el Consejo
             </div>
             <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight">
               Simulador Urológico de Alta Especialidad
@@ -94,7 +94,7 @@ export default function Dashboard({ setView, setSimConfig, setAnkiConfig, user }
           {/* Contador de Banco */}
           <div className="flex items-center gap-3 bg-slate-900/80 px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-2xl border border-slate-700/80 shrink-0 self-stretch sm:self-auto justify-between sm:justify-start">
             <div>
-              <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Banco CONAMEU</p>
+              <p className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">Banco de Estudio</p>
               <p className="text-lg sm:text-xl font-black text-white">
                 {contestadas} <span className="text-slate-500 text-xs font-bold">/ {totalBanco}</span>
               </p>

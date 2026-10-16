@@ -64,7 +64,7 @@ export default function Auth() {
           <div className="w-14 h-14 bg-gradient-to-tr from-uroblue-600 to-indigo-600 rounded-2xl flex items-center justify-center text-white mx-auto mb-3 shadow-lg">
             <Activity className="w-7 h-7 text-white" />
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">CONAMEU Prep</h2>
+          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">UroBoard Prep</h2>
           <p className="text-slate-400 mt-1 text-xs sm:text-sm font-medium">
             {mode === 'forgot' 
               ? 'Recuperación de Contraseña' 
